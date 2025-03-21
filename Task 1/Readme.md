@@ -5,9 +5,9 @@ Participants are expected to understand and document the provided Verilog code, 
 
 1.	Access the Verilog code from the provided link: https://github.com/thesourcerer8/VSDSquadron_FM/blob/main/led_blue/top.v
 2.	Review the module declaration and understand the purpose of each input and output port:
-  o	led_red, led_blue, led_green (Output): Control the RGB LED
-  o	hw_clk (Input): Hardware oscillator clock input
-  o	testwire (Output): Test signal output
+  -	led_red, led_blue, led_green (Output): Control the RGB LED
+  -	hw_clk (Input): Hardware oscillator clock input
+  -	testwire (Output): Test signal output
 3.	Analyze the internal components:
   o	Internal Oscillator (SB_HFOSC) instantiation
   o	Frequency counter logic driven by the internal oscillator
