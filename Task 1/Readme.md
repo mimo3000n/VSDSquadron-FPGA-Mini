@@ -110,6 +110,10 @@ module top (
 ### Summary of the Verilog code functionality
 This [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/647558cc2cb85a29e7f49e0d7019a559c4cdb210/Task%201/top.v) controls an RGB LED with an internal high-frequency oscillator (SB_HFOSC) and a 28-bit frequency counter. The counter's bit 5 is routed to a testwire for monitoring. The RGB LED driver (SB_RGBA_DRV) provides current-controlled PWM outputs with a fixed configuration: blue at maximum brightness, red and green at minimum. It ensures stable LED operation with minimal external dependencies, making it ideal for embedded systems.
 
+### Challenges Faced and Solutions Implemented
+
+- Found it hard to understand the Verilog originally - using google & ChatGPT i were able to understand things better but i have to investigate sill into Verilog.
+
 ## License
 This project is open-source under the MIT License.
 
