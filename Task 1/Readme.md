@@ -43,7 +43,7 @@ The ICE40 family of FPGAs from Lattice Semiconductor includes several internal o
 
 ##### Internal Oscillators in ICE40
 <details>
-<summary> Types of internal oscillators in IEC40 family</summary>
+    <summary> Types of internal oscillators in IEC40 family</summary>
 
 1. **High-Frequency Oscillator (HFOSC)**:
    - **Module Name**: `SB_HFOSC`
@@ -61,22 +61,22 @@ The ICE40 family of FPGAs from Lattice Semiconductor includes several internal o
      - Often used for low-power applications and scenarios where precise timing is less critical.
    - **Use Case**: Ideal for low-power designs where minimal clock speed is sufficient for operation (e.g., wakeup timers, low-speed peripherals).
 
-###### Key Parameters for `SB_HFOSC`
-The `SB_HFOSC` module typically includes the following key parameters:
-- **`CLKHF_DIV`**: Controls the division ratio for the output clock frequency. For instance:
-  - `"0b00"`: Output clock divided by 1 (no division).
-  - `"0b01"`: Output clock divided by 2.
-  - `"0b10"`: Output clock divided by 4, etc.
+3. **Key Parameters for `SB_HFOSC`**
+   The `SB_HFOSC` module typically includes the following key parameters:
+    - **`CLKHF_DIV`**: Controls the division ratio for the output clock frequency. For instance:
+    - `"0b00"`: Output clock divided by 1 (no division).
+    - `"0b01"`: Output clock divided by 2.
+    - `"0b10"`: Output clock divided by 4, etc.
 
-- **Ports**:
-  - **`CLKHFPU`**: Power-up signal to enable the oscillator.
-  - **`CLKHFEN`**: Enable signal to turn on the oscillator output.
-  - **`CLKHF`**: The output clock signal.
+4. **Ports**:
+    - **`CLKHFPU`**: Power-up signal to enable the oscillator.
+    - **`CLKHFEN`**: Enable signal to turn on the oscillator output.
+    - **`CLKHF`**: The output clock signal.
 
-###### Documentation Reference
-To explore details about these internal oscillators, refer to the official Lattice Semiconductor documentation:
-- **ICE40 Family Data Sheet**: Contains detailed descriptions of the internal oscillator features and their parameters.
-- **ICE40 FPGA User Guides**: Provides application examples and implementation techniques.
+5. Documentation Reference
+  To explore details about these internal oscillators, refer to the official Lattice Semiconductor documentation:
+    - **ICE40 Family Data Sheet**: Contains detailed descriptions of the internal oscillator features and their parameters.
+    - **ICE40 FPGA User Guides**: Provides application examples and implementation techniques.
 </details>
 
 what is used in Task 1 Verliog code:
