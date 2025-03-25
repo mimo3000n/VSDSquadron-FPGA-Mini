@@ -1,53 +1,96 @@
-Objective:
-Participants are expected to understand and document the provided Verilog code, create the necessary PCF file, and integrate the design with the VSDSquadron FPGA Mini board using the provided datasheet. (install tools as explained in datasheet)
 
-# Step 1: Understanding the Verilog Code
+# VSDSquadron-FPGA-Mini Project
 
-1.	Access the Verilog code from the provided link: https://github.com/thesourcerer8/VSDSquadron_FM/blob/main/led_blue/top.v
-2.	Review the module declaration and understand the purpose of each input and output port:
-    -	led_red, led_blue, led_green (Output): Control the RGB LED
-    -	hw_clk (Input): Hardware oscillator clock input
-    -	testwire (Output): Test signal output
-3.	Analyze the internal components:
-    -	Internal Oscillator (SB_HFOSC) instantiation
-    -	Frequency counter logic driven by the internal oscillator
-    -	RGB LED driver instantiation with defined current parameters
+## Overview
+Exersice 1 should analyze verlog code of **top.v**. It includes a module **top**, instantiation of an internal oscillator and RGB LED control.
 
-5.	Create a brief documentation explaining the functionality of the Verilog code, including:
-    -	Purpose of the module
-    -	Description of internal logic and oscillator
-    -	Functionality of the RGB LED driver and its relationship to the outputs
+## 1.Modul Analysis:
+```verilog
+module top (
+  // outputs
+  output wire led_red  , // Red
+  output wire led_blue , // Blue
+  output wire led_green , // Green
+  input wire hw_clk,  // Hardware Oscillator, not the internal oscillator
+  output wire testwire
+);
 
-# Step 2: Creating the PCF File
+  wire        int_osc            ;
+  reg  [27:0] frequency_counter_i;
 
-1.	Access the PCF file from the provided link: https://github.com/thesourcerer8/VSDSquadron_FM/blob/main/led_blue/VSDSquadronFM.pcf
-2.	Understand the pin assignments from the PCF file:
-    -	led_red -> Pin 39
-    -	led_blue -> Pin 40
-    -	led_green -> Pin 41
-    -	hw_clk -> Pin 20
-    -	testwire -> Pin 17
-3.	Cross-reference the pin assignments with the VSDSquadron FPGA Mini board datasheet to verify the correctness of the assignments.
-4.	Document the pin mapping and explain the significance of each connection in context with the Verilog code and board hardware.
+  assign testwire = frequency_counter_i[5];
+ 
+  always @(posedge int_osc) begin
+    frequency_counter_i <= frequency_counter_i + 1'b1;
+  end
+```
 
-# Step 3: Integrating with the VSDSquadron FPGA Mini Board
+**output ports**:
+- *led_red, led_blue, led_green* : These **three output wires** control the **RGB LED colors**. 
+      Each wire carries a **single-bit signal** that determines whether its corresponding color is **active** (1) or **inactive** (0).
+- *hw_clk* : A **single-bit input wire** that connects to the **hardware oscillator**, 
+      providing the system **clock signal** that drives the module's timing.
+- *testwire* : A **single-bit output** that provides a **test/debug signal**, specifically connected to **bit 6** of the frequency counter.    
+```verilog
+            assign testwire = frequency_counter_i[5];
+```
+**input port**:
+- *hw_clk* : A **single-bit input wire** that connects to the **hardware oscillator**, 
+      providing the system **clock signal** that drives the module's timing.
+  
+**internal components**:
+- **int_osc** : it is designed to carry the output from the internal oscillator **SB_HFOSC** used in the design
+```verilog
+            wire        int_osc;
+```
+- **frequency_counter_i** : 28bit register as frequency counter used for timing information and testing/debugging
+```verilog
+            reg  [27:0] frequency_counter_i;
+```
+          frequency_counter_i is incremented on every positive edge of *int_osc*
+```verilog
+            always @(posedge int_osc) begin
+                frequency_counter_i <= frequency_counter_i + 1'b1;
+            end
+```
+- **setup of internal oscilliator (*SB_HFOSC*)**
+```verilog
+         SB_HFOSC #(.CLKHF_DIV ("0b10")) u_SB_HFOSC ( .CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
+```
+        - Purpose: This generates a stable internal HF clock signal
+        - clock division: Uses CLKHF_DIV = "0b10" (binary 2)
+        - Control Signals:
+                1. *CLKHFPU = 1'b1* : Enables power-up
+                2. *CLKHFEN = 1'b1* : Enables oscillator
+                3. *CLKHF* : Output connected to internal *int_osc* signal
 
-1.	Review the VSDSquadron FPGA Mini board datasheet to understand its features and pinout.
-2.	Use the datasheet to correlate the physical board connections with the PCF file and Verilog code.
-3.	Connect the board to the computer as described in the datasheet (e.g., using USB-C and ensuring FTDI connection).
-4.	Follow the provided Makefile (https://github.com/thesourcerer8/VSDSquadron_FM/blob/main/led_blue/Makefile) for building and flashing the Verilog code:
-  -	Run 'make clean' to clear any previous builds
-  -	Run 'make build' to compile the design
-  -	Run 'sudo make flash' to program the FPGA board
-5.	Observe the behavior of the RGB LED on the board to confirm successful programming.
 
-# Step 4: Final Documentation
+- **RGB LED Driver (*SB_RGBA_DRV*)**
 
-1.	Compile all observations, explanations, and steps into a comprehensive report.
-2.	Include:
-    -	Summary of the Verilog code functionality
-    -	Pin mapping details from the PCF file
-    -	Integration steps and observations while working with the FPGA Mini board
-    -	Challenges faced and solutions implemented
-3.	Submit the final document along with the working Verilog and PCF files.
-4.	Document all of these in a GitHub repo.
+- Configuration:
+    1. *RGBLEDEN = 1'b1* : Enables LED operation
+    2. *RGB0PWM = 1'b0* : Red LED minimum brightness
+    3. *RGB1PWM = 1'b0* : Green LED minimum brightness
+    4. *RGB2PWM = 1'b1* : Blue LED maximum brightness
+    5. *CURREN = 1'b1* : Enables current control
+- Current settings: All LEDs set to "0b000001" (minimum current)
+- Output connections:
+    1. *RGB0* → *led_red*
+    2. *RGB1* → *led_green*
+    3. *RGB2* → *led_blue*
+  
+## 2.Pin Mappings
+| Signal    | FPGA Pin | Description          |
+|-----------|---------|----------------------|
+| led_red   | 39      | Red LED Output       |
+| led_blue  | 40      | Blue LED Output      |
+| led_green | 41      | Green LED Output     |
+| hw_clk    | 20      | External Clock Input |
+| testwire  | 17      | Debugging Signal     |
+
+
+## License
+This project is open-source under the MIT License.
+
+## Contact
+Email: kmskanda29@gmail.com
