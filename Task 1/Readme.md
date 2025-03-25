@@ -2,7 +2,7 @@
 # VSDSquadron-FPGA-Mini Project
 
 ## Overview
-Exersice 1 should analyze verlog code of **top.v**. It includes a module **top**, instantiation of an internal oscillator and RGB LED control.
+Task 1 should analyze verlog code of **top.v**. It includes a module **top**, instantiation of an internal oscillator and RGB LED control.
 
 ## 1.Modul Analysis:
 ```verilog
