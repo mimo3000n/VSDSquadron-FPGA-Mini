@@ -38,7 +38,7 @@ module top (
 - *hw_clk* : A **single-bit input wire** that connects to the **hardware oscillator**, 
       providing the system **clock signal** that drives the module's timing.
   
-###**internal components (oscilatzor, LED driver**:
+### **internal components (oscillator, LED driver)**:
 The ICE40 family of FPGAs from Lattice Semiconductor includes several internal oscillators that can be utilized in various designs. Here's a detailed overview of the internal oscillators available in ICE40 FPGAs:
 
 #### Internal Oscillators in ICE40
