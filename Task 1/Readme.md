@@ -4,7 +4,7 @@
 ## Overview
 Task 1 should analyze verlog code of **top.v**. It includes a module **top**, instantiation of an internal oscillator and RGB LED control.
 
-## 1.Modul Analysis:
+## Step 1: Understanding the Verilog Code
 ```verilog
 module top (
   // outputs
@@ -94,7 +94,8 @@ module top (
     2. *RGB1* → *led_green*
     3. *RGB2* → *led_blue*
   
-## 2.Pin Mappings
+## Step 2: Creating the PCF File
+
 | Signal    | FPGA Pin | Description          |
 |-----------|---------|----------------------|
 | led_red   | 39      | Red LED Output       |
@@ -103,6 +104,10 @@ module top (
 | hw_clk    | 20      | External Clock Input |
 | testwire  | 17      | Debugging Signal     |
 
+## Step 3: Integrating with the VSDSquadron FPGA Mini Board
+<details>
+<summary>Integration of VSDSquadron FPGA Mini Board</summary>
+  
 ## Step 4: Final Documentation
 <details>
 <summary>Final Documentation of Task 1</summary>
