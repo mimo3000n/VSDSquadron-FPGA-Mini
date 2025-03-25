@@ -41,8 +41,8 @@ module top (
 ###**internal components (oscilatzor, LED driver**:
 The ICE40 family of FPGAs from Lattice Semiconductor includes several internal oscillators that can be utilized in various designs. Here's a detailed overview of the internal oscillators available in ICE40 FPGAs:
 
-<details>
-#### Types of Internal Oscillators in ICE40
+<details>#### Types of Internal Oscillators in ICE40
+
 
 1. **High-Frequency Oscillator (HFOSC)**:
    - **Module Name**: `SB_HFOSC`
