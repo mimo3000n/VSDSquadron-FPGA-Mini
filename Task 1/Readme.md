@@ -43,7 +43,7 @@ The ICE40 family of FPGAs from Lattice Semiconductor includes several internal o
 
 #### Internal Oscillators in ICE40
 <details>
-<summary> Types of internal oscillators</summary>
+<summary> Types of internal oscillators in IEC40 family</summary>
 
 1. **High-Frequency Oscillator (HFOSC)**:
    - **Module Name**: `SB_HFOSC`
