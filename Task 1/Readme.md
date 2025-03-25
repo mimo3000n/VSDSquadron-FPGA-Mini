@@ -38,10 +38,10 @@ module top (
 - *hw_clk* : A **single-bit input wire** that connects to the **hardware oscillator**, 
       providing the system **clock signal** that drives the module's timing.
   
-**internal components**:
+###**internal components (oscilatzor, LED driver**:
 The ICE40 family of FPGAs from Lattice Semiconductor includes several internal oscillators that can be utilized in various designs. Here's a detailed overview of the internal oscillators available in ICE40 FPGAs:
 
-### Types of Internal Oscillators in ICE40
+#### Types of Internal Oscillators in ICE40
 
 1. **High-Frequency Oscillator (HFOSC)**:
    - **Module Name**: `SB_HFOSC`
@@ -59,7 +59,7 @@ The ICE40 family of FPGAs from Lattice Semiconductor includes several internal o
      - Often used for low-power applications and scenarios where precise timing is less critical.
    - **Use Case**: Ideal for low-power designs where minimal clock speed is sufficient for operation (e.g., wakeup timers, low-speed peripherals).
 
-### Key Parameters for `SB_HFOSC`
+#### Key Parameters for `SB_HFOSC`
 The `SB_HFOSC` module typically includes the following key parameters:
 - **`CLKHF_DIV`**: Controls the division ratio for the output clock frequency. For instance:
   - `"0b00"`: Output clock divided by 1 (no division).
@@ -71,7 +71,7 @@ The `SB_HFOSC` module typically includes the following key parameters:
   - **`CLKHFEN`**: Enable signal to turn on the oscillator output.
   - **`CLKHF`**: The output clock signal.
 
-### Documentation Reference
+#### Documentation Reference
 To explore details about these internal oscillators, refer to the official Lattice Semiconductor documentation:
 - **ICE40 Family Data Sheet**: Contains detailed descriptions of the internal oscillator features and their parameters.
 - **ICE40 FPGA User Guides**: Provides application examples and implementation techniques.
