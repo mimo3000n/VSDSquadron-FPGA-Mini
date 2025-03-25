@@ -107,7 +107,8 @@ module top (
 ## Step 3: Integrating with the VSDSquadron FPGA Mini Board
 <details>
 <summary>Integration of VSDSquadron FPGA Mini Board</summary>
-  
+</details>
+
 ## Step 4: Final Documentation
 <details>
 <summary>Final Documentation of Task 1</summary>
@@ -124,3 +125,4 @@ This project is open-source under the MIT License.
 
 ## Contact
 Email: mimo3000ngmail.com
+</details>
