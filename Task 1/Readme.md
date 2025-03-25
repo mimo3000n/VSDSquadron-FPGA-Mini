@@ -96,6 +96,8 @@ module top (
   
 ## Step 2: Creating the PCF File
 
+The PCF [Physical Constraint File] file can be accessed here. It is used in FPGA development to map logical signals from HDL code to physical pins on the FPGA chip. Each set_io command establishes this connection between the named ports to physical pins on the board.
+
 | Signal    | FPGA Pin | Description          |
 |-----------|---------|----------------------|
 | led_red   | 39      | Red LED Output       |
