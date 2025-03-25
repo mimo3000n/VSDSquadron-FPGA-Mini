@@ -112,7 +112,7 @@ This [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/64
 
 ### Challenges Faced and Solutions Implemented
 
-- Found it hard to understand the Verilog originally - using google & ChatGPT i were able to understand things better but i have to investigate sill into Verilog.
+- Found it hard to understand the Verilog code originally - using google & ChatGPT i were able to understand things better but i have to investigate sill into Verilog.
 
 ## License
 This project is open-source under the MIT License.
