@@ -53,7 +53,7 @@ module top (
                 frequency_counter_i <= frequency_counter_i + 1'b1;
             end
 ```
-- **setup of internal oscilliator (*SB_HFOSC*)**
+- **instantiation of internal oscilliator (*SB_HFOSC*)**
 ```verilog
          SB_HFOSC #(.CLKHF_DIV ("0b10")) u_SB_HFOSC ( .CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
 ```
@@ -65,7 +65,22 @@ module top (
                 3. *CLKHF* : Output connected to internal *int_osc* signal
 
 
-- **RGB LED Driver (*SB_RGBA_DRV*)**
+- **instantiation of RGB LED Driver (*SB_RGBA_DRV*)**
+```verilog
+ SB_RGBA_DRV RGB_DRIVER (
+    .RGBLEDEN(1'b1                                            ),
+    .RGB0PWM (1'b0), // red
+    .RGB1PWM (1'b0), // green
+    .RGB2PWM (1'b1), // blue
+    .CURREN  (1'b1                                            ),
+    .RGB0    (led_red                                       ), //Actual Hardware connection
+    .RGB1    (led_green                                       ),
+    .RGB2    (led_blue                                        )
+  );
+  defparam RGB_DRIVER.RGB0_CURRENT = "0b000001";
+  defparam RGB_DRIVER.RGB1_CURRENT = "0b000001";
+  defparam RGB_DRIVER.RGB2_CURRENT = "0b000001";
+```
 
 - Configuration:
     1. *RGBLEDEN = 1'b1* : Enables LED operation
