@@ -199,7 +199,7 @@ set_io  testwire 17
 | hw_clk    | 20      | External Clock Input |
 | testwire  | 17      | Debugging Signal     |
 
-**Validation in provided Datasheet:**
+**Validation in provided Datasheet:** [Datasheet](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/829abdf43e5d6107ee70a793af6b33382ff3fe6f/Task%201/VSDSquadronFMDatasheet.pdf)
 
 ![image](https://github.com/user-attachments/assets/500904cf-1382-41f5-8f65-6af7b3918028)
 
