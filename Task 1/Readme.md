@@ -199,6 +199,11 @@ set_io  testwire 17
 | hw_clk    | 20      | External Clock Input |
 | testwire  | 17      | Debugging Signal     |
 
+**Validation in provided Datasheet:**
+
+![image](https://github.com/user-attachments/assets/500904cf-1382-41f5-8f65-6af7b3918028)
+
+
 ## Step 3: Integrating with the VSDSquadron FPGA Mini Board
 <details>
 <summary>Integration of VSDSquadron FPGA Mini Board</summary>
