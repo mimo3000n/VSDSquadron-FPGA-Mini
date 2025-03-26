@@ -1,6 +1,6 @@
 Objective: Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 Fill up the form - https://forms.gle/yDWvJhwDYzmxG4bc7 
-•  Steps:
+
 # 1.	Study the Existing Code:
   -	Access the uart_loopback project from the VSDSquadron_FM repository.
   -	Analyze the Verilog code to understand the loopback logic.
