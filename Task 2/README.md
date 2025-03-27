@@ -2,7 +2,7 @@
 # VSDSquadron-FPGA-Mini Project - Task 2
 
 ## Overview
-Task 1 should analyze verlog code of **top.v**. It includes a module **top**, instantiation of an internal oscillator and RGB LED control.
+Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 
 ## Step 1: Understanding the Verilog Code
 ```verilog
