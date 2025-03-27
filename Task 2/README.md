@@ -4,7 +4,7 @@
 ## Overview
 Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 
-## Step 1: Understanding the Verilog Code
+## Step 1: Study the Existing Code
 ```verilog
 module top (
   // outputs
