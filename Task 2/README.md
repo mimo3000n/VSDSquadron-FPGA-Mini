@@ -5,6 +5,8 @@
 Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 
 ## Step 1: Study the Existing Code
+The UART (Universal Asynchronous Receiver-Transmitter) is a hardware communication protocol designed for serial communication between devices. It features two primary data lines: the TX (Transmit) pin and the RX (Receive) pin. A UART loopback mechanism serves as a test or diagnostic mode where data sent to the TX pin is routed directly back to the RX pin of the same module. This functionality allows the system to confirm the proper operation of the TX and RX lines without requiring an external device. 
+
 ```verilog
 module top (
   // outputs
