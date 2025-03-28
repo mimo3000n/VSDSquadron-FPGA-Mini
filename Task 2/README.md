@@ -5,27 +5,120 @@
 Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 
 ## Step 1: Study the Existing Code
-The UART (Universal Asynchronous Receiver-Transmitter) is a hardware communication protocol designed for serial communication between devices. It features two primary data lines: the TX (Transmit) pin and the RX (Receive) pin. A UART loopback mechanism serves as a test or diagnostic mode where data sent to the TX pin is routed directly back to the RX pin of the same module. This functionality allows the system to confirm the proper operation of the TX and RX lines without requiring an external device. 
+
+  The code is a simple UART (Universal Asynchronous Receiver/Transmitter) transmitter module that implements an 8 data bits, no parity, and 1 stop bit (8N1) format. Below, I will explain each part of the code and analyze its functionality.
+  
+### Module Declaration
+```verilog
+module uart_tx_8n1 (
+    clk,        // input clock
+    txbyte,     // outgoing byte
+    senddata,   // trigger tx
+    txdone,     // outgoing byte sent
+    tx,         // tx wire,
+);
+```
+- The module is named `uart_tx_8n1` and has five ports: two inputs (`clk`, `senddata`), one input/output (`txbyte`, which is the byte to transmit), two outputs (`txdone`, indicating transmission completion, and `tx`, the transmission line).
+
+### Input and Output Declarations
+```verilog
+input clk;
+input[7:0] txbyte;
+input senddata;
+output txdone;
+output tx;
+```
+- `clk`: the clock signal for synchronization.
+- `txbyte`: a byte (8 bits) to be transmitted.
+- `senddata`: a signal to initiate the transmission.
+- `txdone`: signals when the byte has been transmitted.
+- `tx`: this is the serial transmission line.
+
+### Parameter Definition
+```verilog
+parameter STATE_IDLE=8'd0;
+parameter STATE_STARTTX=8'd1;
+parameter STATE_TXING=8'd2;
+parameter STATE_TXDONE=8'd3;
+```
+- Defines states for the state machine:
+  - `STATE_IDLE`: Waiting for the send command.
+  - `STATE_STARTTX`: Beginning transmission.
+  - `STATE_TXING`: Sending the data bits.
+  - `STATE_TXDONE`: Finished transmitting the byte.
+
+### State Variables
+```verilog
+reg[7:0] state=8'b0;
+reg[7:0] buf_tx=8'b0;
+reg[7:0] bits_sent=8'b0;
+reg txbit=1'b1;
+reg txdone=1'b0;
+```
+- `state`: holds the current state of the state machine.
+- `buf_tx`: buffer for the byte being transmitted.
+- `bits_sent`: counts the number of bits sent.
+- `txbit`: the actual value on the `tx` line (0 for start, data bits, or stop).
+- `txdone`: indicates when the transmission is complete.
+
+### Wiring
+```verilog
+assign tx=txbit;
+```
+- The `tx` output is assigned the value of `txbit`.
+
+### Always Block
+```verilog
+always @ (posedge clk) begin
+```
+- This block is triggered at each rising edge of the clock.
+
+### State Machine Logic
+```verilog
+if (senddata == 1 && state == STATE_IDLE) begin
+    state <= STATE_STARTTX;
+    buf_tx <= txbyte;
+    txdone <= 1'b0;
+end else if (state == STATE_IDLE) begin
+    // idle at high
+    txbit <= 1'b1;
+    txdone <= 1'b0;
+end
+```
+- If `senddata` is asserted while in the `STATE_IDLE`, it transitions to `STATE_STARTTX`, loads the byte to be transmitted into `buf_tx`, and resets `txdone`.
 
 ```verilog
-module top (
-  // outputs
-  output wire led_red  , // Red
-  output wire led_blue , // Blue
-  output wire led_green , // Green
-  input wire hw_clk,  // Hardware Oscillator, not the internal oscillator
-  output wire testwire
-);
-
-  wire        int_osc            ;
-  reg  [27:0] frequency_counter_i;
-
-  assign testwire = frequency_counter_i[5];
- 
-  always @(posedge int_osc) begin
-    frequency_counter_i <= frequency_counter_i + 1'b1;
-  end
+if (state == STATE_STARTTX) begin
+    txbit <= 1'b0; // Start bit is low
+    state <= STATE_TXING;
+end
 ```
+- In `STATE_STARTTX`, the output `txbit` is set to low to indicate the start of transmission.
+
+```verilog
+if (state == STATE_TXING && bits_sent < 8'd8) begin
+    txbit <= buf_tx[0]; // Send LSB first
+    buf_tx <= buf_tx >> 1; // Shift the buffer
+    bits_sent = bits_sent + 1;
+end else if (state == STATE_TXING) begin
+    // send stop bit (high)
+    txbit <= 1'b1;
+    bits_sent <= 8'b0;
+    state <= STATE_TXDONE;
+end
+```
+- During the `STATE_TXING`, the module sends the bits of `txbyte` starting from the least significant bit (LSB) to the most significant bit (MSB). It shifts `buf_tx` right after each transmission. When all bits have been sent, it sends the stop bit (high) and transitions to `STATE_TXDONE`.
+
+### Transmission Completion
+```verilog
+if (state == STATE_TXDONE) begin
+    txdone <= 1'b1;
+    state <= STATE_IDLE;
+end
+```
+- In the `STATE_TXDONE`, it sets `txdone` to high to indicate that the transmission is complete and transitions back to `STATE_IDLE`.
+```
+
 
 **output ports**:
 - *led_red, led_blue, led_green* : These **three output wires** control the **RGB LED colors**. 
