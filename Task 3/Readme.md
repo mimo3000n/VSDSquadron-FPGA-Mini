@@ -7,6 +7,217 @@ Develop a UART transmitter module capable of sending serial data from the FPGA t
 ## Step 1: Study the Existing Code
 The UART (Universal Asynchronous Receiver-Transmitter) is a hardware communication protocol designed for serial communication between devices. It features two primary data lines: the TX (Transmit) pin and the RX (Receive) pin. A UART loopback mechanism serves as a test or diagnostic mode where data sent to the TX pin is routed directly back to the RX pin of the same module. This functionality allows the system to confirm the proper operation of the TX and RX lines without requiring an external device. 
 
+--------------------------------------------------------------
+
+### `top.v` Module Analysis
+
+#### Overview
+The `top.v` module serves as the top-level module for a design that includes RGB LED control and UART transmission functionality. It generates a 9600 Hz clock from a high-frequency oscillator and drives RGB LEDs based on a frequency counter.
+
+#### Module Declaration
+```verilog
+module top (
+  // outputs
+  output wire led_red  , // Red
+  output wire led_blue , // Blue
+  output wire led_green , // Green
+  output wire uarttx , // UART Transmission pin
+  input wire  hw_clk
+);
+```
+- **Module Name:** The module is named `top`.
+- **Ports:**
+  - `led_red`, `led_blue`, `led_green`: Output wires for the RGB LEDs.
+  - `uarttx`: Output wire for the UART transmission pin.
+  - `hw_clk`: Input wire for the hardware clock signal.
+
+#### Internal Signals
+```verilog
+wire        int_osc            ;
+reg  [27:0] frequency_counter_i;
+```
+- **Internal Signals:**
+  - `int_osc`: A wire that will carry the output of the internal oscillator.
+  - `frequency_counter_i`: A 28-bit register that serves as a counter for generating PWM signals and controlling other timing-related functionalities.
+
+#### 9600 Hz Clock Generation
+```verilog
+reg clk_9600 = 0;
+reg [31:0] cntr_9600 = 32'b0;
+parameter period_9600 = 625;
+```
+- **Clock Variables:**
+  - `clk_9600`: A register that will hold the generated 9600 Hz clock signal.
+  - `cntr_9600`: A 32-bit counter for generating the 9600 Hz clock by counting the number of cycles of the `int_osc`.
+  - `period_9600`: A parameter defining the period for the 9600 Hz clock generation.
+
+#### UART Transmission Instantiation
+```verilog
+uart_tx_8n1 DanUART (.clk (clk_9600), .txbyte("D"), .senddata(frequency_counter_i[24]), .tx(uarttx));
+```
+- **UART Instance:** An instance of the `uart_tx_8n1` module is created, named `DanUART`.
+  - `clk`: Connected to the `clk_9600` signal.
+  - `txbyte`: Transmits the ASCII character "D" when `senddata` is asserted.
+  - `senddata`: Controlled by the 24th bit of `frequency_counter_i`.
+  - `tx`: Output connected to the `uarttx` pin.
+
+#### Internal Oscillator
+```verilog
+SB_HFOSC #(.CLKHF_DIV ("0b10")) u_SB_HFOSC ( .CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
+```
+- **Oscillator Instance:** A high-frequency oscillator is instantiated to generate a reference clock for the module.
+  - `CLKHFPU`: Power-up signal enabled.
+  - `CLKHFEN`: Oscillator enabled.
+  
+The oscillator's output is connected to `int_osc`, which provides the clock source for the frequency counter.
+
+#### Frequency Counter
+```verilog
+always @(posedge int_osc) begin
+  frequency_counter_i <= frequency_counter_i + 1'b1;
+  /* generate 9600 Hz clock */
+  cntr_9600 <= cntr_9600 + 1;
+  if (cntr_9600 == period_9600) begin
+    clk_9600 <= ~clk_9600;
+    cntr_9600 <= 32'b0;
+  end
+end
+```
+- **Counter Logic:**
+  - The always block triggers on the rising edge of `int_osc`.
+  - It increments `frequency_counter_i`, which can be used for signaling or timing purposes.
+  - `cntr_9600` counts the number of cycles of the oscillator. When it reaches `period_9600` (625 counts at 12 MHz), it toggles the `clk_9600` signal and resets the counter.
+
+#### RGB LED Driver Instantiation
+```verilog
+SB_RGBA_DRV RGB_DRIVER (
+  .RGBLEDEN(1'b1                                            ),
+  .RGB0PWM (frequency_counter_i[24]&frequency_counter_i[23] ),
+  .RGB1PWM (frequency_counter_i[24]&~frequency_counter_i[23]),
+  .RGB2PWM (~frequency_counter_i[24]&frequency_counter_i[23]),
+  .CURREN  (1'b1                                            ),
+  .RGB0    (led_green                                       ), //Actual Hardware connection
+  .RGB1    (led_blue                                       
+
+Here's the detailed analysis in Markdown format. You can copy and paste this into a file named `uart_tx_8n1_analysis.md`.
+
+```markdown
+# UART TX 8N1 Module Analysis
+
+## 1. Module Declaration
+```verilog
+module uart_tx_8n1 (
+    clk,        // input clock
+    txbyte,     // outgoing byte
+    senddata,   // trigger tx
+    txdone,     // outgoing byte sent
+    tx,         // tx wire
+);
+```
+- **Module Name**: The module is named `uart_tx_8n1`.
+- **Ports**:
+  - `clk`: The clock input used to synchronize the state transitions.
+  - `txbyte`: The 8-bit input representing the byte to be transmitted.
+  - `senddata`: A control signal used to trigger the transmission of the `txbyte`.
+  - `txdone`: An output signal that indicates when the transmission of the byte is complete.
+  - `tx`: The serial output line used to transmit data.
+
+## 2. Input and Output Declarations
+```verilog
+input clk;
+input[7:0] txbyte;
+input senddata;
+
+output txdone;
+output tx;
+```
+- **Inputs**:
+  - `clk`: The clock signal for synchronizing operations.
+  - `txbyte`: A byte (8 bits) to be transmitted.
+  - `senddata`: A signal to start the transmission process.
+  
+- **Outputs**:
+  - `txdone`: Indicates that the byte has been successfully transmitted.
+  - `tx`: Serial transmission line.
+
+## 3. Parameters
+```verilog
+parameter STATE_IDLE=8'd0;
+parameter STATE_STARTTX=8'd1;
+parameter STATE_TXING=8'd2;
+parameter STATE_TXDONE=8'd3;
+```
+- **States**: The parameters define the various states of the state machine used in UART transmission:
+  - `STATE_IDLE`: The initial state where no transmission is occurring.
+  - `STATE_STARTTX`: The state where the start bit is sent.
+  - `STATE_TXING`: The state during which data bits are being transmitted.
+  - `STATE_TXDONE`: The state indicating that the transmission is complete.
+
+## 4. State Variables
+```verilog
+reg[7:0] state=8'b0;
+reg[7:0] buf_tx=8'b0;
+reg[7:0] bits_sent=8'b0;
+reg txbit=1'b1;
+reg txdone=1'b0;
+```
+- **State Variables**:
+  - `state`: Holds the current state of the transmission process.
+  - `buf_tx`: Buffer that stores the byte to be transmitted.
+  - `bits_sent`: Counts the number of bits that have been transmitted.
+  - `txbit`: The signal that is driven onto the `tx` wire (initialized to high).
+  - `txdone`: A flag to indicate the completion of the transmission (initialized to low).
+
+## 5. Wiring
+```verilog
+assign tx=txbit;
+```
+- The `assign` statement connects the `tx` output to the `txbit` signal, which carries the current bit value being transmitted.
+
+## 6. The Always Block
+```verilog
+always @ (posedge clk) begin
+```
+- This `always` block triggers on the positive edge of the clock signal, allowing the state machine to process events in sync with the clock.
+
+## 7. State Machine Logic
+The state machine governs the transmission process:
+
+### Start Sending
+```verilog
+if (senddata == 1 && state == STATE_IDLE) begin
+    state <= STATE_STARTTX;
+    buf_tx <= txbyte;
+    txdone <= 1'b0;
+end else if (state == STATE_IDLE) begin
+    // idle at high
+    txbit <= 1'b1;
+    txdone <= 1'b0;
+end
+```
+- If `senddata` is high and the state is `STATE_IDLE`, the machine transitions to `STATE_STARTTX`, and the byte to be transmitted is loaded into `buf_tx`.
+
+### Send Start Bit
+```verilog
+if (state == STATE_STARTTX) begin
+    txbit <= 1'b0; // Start bit is low
+    state <= STATE_TXING;
+end
+```
+- In this state, the start bit is sent as a low signal (ground). The state then transitions to `STATE_TXING`.
+
+### Clock Data Out
+```verilog
+if (state == STATE_TXING && bits_sent < 8'd8) begin
+    txbit <= buf_tx[0]; // Send LSB first
+    buf_tx <= buf_tx >> 1; // Shift the buffer
+    bits_sent = bits_sent + 1;
+end else if (state == STATE_TXING) begin
+    // send stop bit (high)
+    txbit
+
+-------------------------------------------------------------
+
 ```verilog
 module top (
   // outputs
