@@ -286,17 +286,36 @@ set_io  testwire 17
 ## Step 4: Final Documentation
 <details>
 <summary>Final Documentation of Task 1</summary>
-    
+  
+### Understanding workflow and Implementing the Verilog Code
+- Set Up the Development Environment
+- Ensure that the PCF file mappings match the physical connections on the FPGA board.
+- Connect the board to the computer using USB-C, ensuring proper FTDI communication.
+- Compile and Flash the Verilog Code
+
+   
 ### Summary of the Verilog code functionality
 This [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/647558cc2cb85a29e7f49e0d7019a559c4cdb210/Task%201/top.v) controls an RGB LED with an internal high-frequency oscillator (SB_HFOSC) and a 28-bit frequency counter. The counter's bit 6 is routed to a testwire for monitoring. The RGB LED driver (SB_RGBA_DRV) provides current-controlled PWM outputs with a fixed configuration: blue at maximum brightness, red and green at minimum. It ensures stable LED operation with minimal external dependencies, making it ideal for embedded systems education.
+
+**Run the following commands in the project directory:**
+```
+make clean   # Clears previous builds
+make build   # Compiles the design
+sudo make flash   # Programs the FPGA board
+```
+### Verify LED Behavior
+
+Once programmed, the RGB LED start blinking.
+This confirms that the FPGA has been successfully programmed.
 
 ### Challenges Faced and Solutions Implemented
 
 - Found it hard to understand the Verilog code originally - using google & ChatGPT i were able to understand things better but i have to investigate sill into Verilog.
+- after receiving the board it was quite easy to get developemnt enviroment running and connect FPGA-board to VirtualBox. 
 
-## License
+### License
 This project is open-source under the MIT License.
 
-## Contact
+### Contact
 Email: mimo3000ngmail.com
 </details>
