@@ -242,6 +242,45 @@ set_io  testwire 17
 ## Step 3: Integrating with the VSDSquadron FPGA Mini Board
 <details>
 <summary>Integration of VSDSquadron FPGA Mini Board</summary>
+  
+  1. Review the VSDSquadron FPGA Mini board datasheet to understand its features and pinout.
+
+  2. Use the datasheet to correlate the physical board connections with the PCF file and Verilog code.
+  
+  3. Connect the board to the computer as described in the datasheet (e.g., using USB-C and ensuring FTDI connection).
+     Connect board to PC via USB-C cable and check in VirtalBox device manager that an additional COM-Port appears.
+
+
+     ![image](https://github.com/user-attachments/assets/23dc8baf-7db0-47fb-aeb1-8791eb5568de)
+
+        check USB device in linux with "lsusb" command:
+    
+  ![image](https://github.com/user-attachments/assets/3577bc85-7fd4-486f-9505-b3f3a13fd01e)
+    
+        result: port is succesful connected and visible das device!!
+
+    
+  5. Follow the provided Makefile (https://github.com/thesourcerer8/VSDSquadron_FM/blob/main/led_blue/Makefile) for building and flashing the Verilog code:
+   - Run 'make clean' to clear any previous builds
+
+![image](https://github.com/user-attachments/assets/6a0c1c95-60c7-44d6-b0c7-b98786f48033)
+
+   - Run 'make build' to compile the design
+
+![image](https://github.com/user-attachments/assets/a19dd6aa-fbf1-4199-ac69-221310b74894)
+
+   - Run 'sudo make flash' to program the FPGA boad
+
+![image](https://github.com/user-attachments/assets/90125338-bc5f-45d9-8c5e-f0b93d40fb8f)
+
+  5. Observe the behavior of the RGB LED on the board to confirm successful programming.
+
+
+[Video](https://github.com/user-attachments/assets/70aef1b5-7dcf-4e44-afc2-a9b0c703b7b2)
+
+
+
+
 </details>
 
 ## Step 4: Final Documentation
