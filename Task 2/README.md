@@ -266,7 +266,7 @@ The ICE40 FPGA family includes an internal RGB LED driver (SB_RGBA_DRV) that sim
     3. *RGB2* → *led_blue*
 </details>
   
-## Step 2: Design Documentation:
+## Design Documentation:
 <details>
 <summary>Design Documentation</summary>
   
@@ -279,40 +279,6 @@ Develop a detailed circuit diagram showing connections between the FPGA and any 
 ![VSDSquadron-FPGA-Mini Project - Task 22](https://github.com/user-attachments/assets/ad0da020-d427-40f0-8c47-761ad72ef984)
 
 </details>
-
-The PCF [Physical Constraint File] file can be accessed [here](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/a8364ed4a33e27c54fb73841acb0c101f5b01b22/Task%201/VSDSquadronFM.pcf). It is used in FPGA development to map logical signals from HDL code to physical pins on the FPGA chip. Each set_io command establishes this connection between the named ports to physical pins on the board.
-```pcf
-set_io  led_red	39
-set_io  led_blue 40
-set_io  led_green 41
-set_io  hw_clk 20
-set_io  testwire 17
-````
-
-**set_io**
-
-- This command is used to assign specific I/O signals (wires) in your HDL design to physical pins on the FPGA package. It tells the synthesis and implementation tools which FPGA pins correspond to the specified logic signals in your design.
-
-**led_red, led_blue, led_green, hw_clk, testwire**
-
--These are the names of the logical signals (or wires) defined in your Verilog design. Each name corresponds to a specific output or input in your design that connects to physical hardware components, such as LEDs or clocks.
-
-
-**39, 40, 41, 20, 17**
-- These are the physical pin numbers of the FPGA where each respective signal will be connected. The numbers refer to the physical pin assignments on the FPGA package.
-
-| Signal    | FPGA Pin | Description          |
-|-----------|---------|----------------------|
-| led_red   | 39      | Red LED Output       |
-| led_blue  | 40      | Blue LED Output      |
-| led_green | 41      | Green LED Output     |
-| hw_clk    | 20      | External Clock Input |
-| testwire  | 17      | Debugging Signal     |
-
-**Validation in provided Datasheet:** [Datasheet](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/829abdf43e5d6107ee70a793af6b33382ff3fe6f/Task%201/VSDSquadronFMDatasheet.pdf)
-
-![image](https://github.com/user-attachments/assets/500904cf-1382-41f5-8f65-6af7b3918028)
-
 
 ## Step 3: Integrating with the VSDSquadron FPGA Mini Board
 <details>
