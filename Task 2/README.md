@@ -4,9 +4,11 @@
 ## Overview
 Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
 
-## Step 1: Study the Existing Code
+## Study the Existing Code
 
-  The code is a simple UART (Universal Asynchronous Receiver/Transmitter) transmitter module that implements an 8 data bits, no parity, and 1 stop bit (8N1) format. Below, I will explain each part of the code and analyze its functionality.
+<details>
+<summary>Study the Existing Code</summary>
+    The code is a simple UART (Universal Asynchronous Receiver/Transmitter) transmitter module that implements an 8 data bits, no parity, and 1 stop bit (8N1) format. Below, I will explain each part of the code and analyze its functionality.
   
 ### Module Declaration
 ```verilog
@@ -262,8 +264,21 @@ The ICE40 FPGA family includes an internal RGB LED driver (SB_RGBA_DRV) that sim
     1. *RGB0* → *led_red*
     2. *RGB1* → *led_green*
     3. *RGB2* → *led_blue*
+</details>
   
-## Step 2: Creating the PCF File
+## Step 2: Design Documentation:
+<details>
+<summary>Design Documentation</summary>
+  
+Create a block diagram illustrating the UART loopback architecture.
+
+![VSDSquadron-FPGA-Mini Project - Task 2 1](https://github.com/user-attachments/assets/47b345ad-05e9-4ce1-872d-653ed2fd52ee)
+
+Develop a detailed circuit diagram showing connections between the FPGA and any peripheral devices used.
+
+![VSDSquadron-FPGA-Mini Project - Task 22](https://github.com/user-attachments/assets/ad0da020-d427-40f0-8c47-761ad72ef984)
+
+</details>
 
 The PCF [Physical Constraint File] file can be accessed [here](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/a8364ed4a33e27c54fb73841acb0c101f5b01b22/Task%201/VSDSquadronFM.pcf). It is used in FPGA development to map logical signals from HDL code to physical pins on the FPGA chip. Each set_io command establishes this connection between the named ports to physical pins on the board.
 ```pcf
