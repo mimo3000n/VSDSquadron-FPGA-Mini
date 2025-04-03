@@ -208,7 +208,7 @@ the led's on the board look like this, all leds ligthing red as expected!
 <summary>Final Documentation of Task 2</summary>
     
 ### Summary of the Verilog code functionality
-The given [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/647558cc2cb85a29e7f49e0d7019a559c4cdb210/Task%201/top.v) works as a UART (Universal Asynchronous Receiver-Transmitter) for serial communication between devices. It consists of two main data lines: the TX (Transmit) pin and the RX (Receive) pin. Specifically, the implemented UART loopback mechanism is a test or diagnostic mode where data, which is transmitted to the TX pin is directly routed back to the RX pin of the same module. This allows the system to verify that the TX and RX lines function correctly without the need of an external device.
+The given [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/9221679090866a04f7cff231b9ec5c29e8601404/Task%202/top.v) works as a UART (Universal Asynchronous Receiver-Transmitter) for serial communication between devices. It consists of two main data ports: the TX pin and the RX pin. Specifically, the implemented UART loopback mechanism is a test or diagnostic mode where data, which is transmitted to the TX pin is directly routed back to the RX pin of the same module. This allows the system to verify that the TX and RX lines function correctly without the need of an external device.
 
 ### Challenges Faced and Solutions Implemented
 
