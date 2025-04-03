@@ -192,14 +192,13 @@ the led's on the board look like this, all leds ligthing red as expected!
 
    ![image](https://github.com/user-attachments/assets/7d193f1a-2e18-4802-bde0-6d3a395a13a7)
 
-  - double click on SEND window in the empty field below "Name" lable, Send-Window appear, now enter a Sequenze Name like "Task " and in Sequence field a character sequence that you like to transfer to tx-Port, in my case "Validatition Task 2", click OK.
+  - in top icon-bar you find the "Start comminication" butten (marked with red arrow)
 
-  - ![image](https://github.com/user-attachments/assets/7e7cb912-9fc7-44ca-ba67-e9c05dce995f)
+  - ![image](https://github.com/user-attachments/assets/ba39faba-e85a-4d03-892b-17cb26455f83)
 
-- click now on "Send sequence" butten (marked with red arrow) to send defined sequence. As result you should see samne char sequence on rx-line as defines in the Verilog module!
+- click now on "Start communication" butten or F5 to start receiving process. As defined in Verilog-module we reveive continuous the char "D". 
 
-- ![image](https://github.com/user-attachments/assets/a474ab3f-e61c-4f36-970e-eaa00e7deec6)
-
+- ![image](https://github.com/user-attachments/assets/250441a2-289b-41b1-bda6-023bf8008d7d)
 
 </details>
 
