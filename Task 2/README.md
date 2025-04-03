@@ -131,12 +131,67 @@ Develop a detailed circuit diagram showing connections between the FPGA and any 
 
 ## 3. Implementation:
 <details>
-<summary>Implementation/summary>
+<summary>Implementation</summary>
+    
+### **Hardware Setup**
+
+- Refer to the [VSDSquadron FPGA Mini Datasheet](https://www.vlsisystemdesign.com/wp-content/uploads/2025/01/VSDSquadronFMDatasheet.pdf)
+ for board details and pinout specifications.
+- Connect a USB-C interface between the board and the host computer.
+- Check FTDI connection in order to facilitate FPGA programming and debugging. Validate new serial device on you host system i.e. in Windows Device Manger that you see an additionam COM-Port, COM8 in my case.
+ 
+  ![image](https://github.com/user-attachments/assets/2b0adc95-aefd-413d-86a2-c0dc65b42b20)
+
+    or in VM provided by VSD, in Devices -> USB
+
+  ![image](https://github.com/user-attachments/assets/848be0a3-a1fa-457c-837b-dc11097a178a)
+
+### **steps for compiling and flashing**
+
+   open a termin window, cd to uart_loopback folder and execute below described comand sequence.
+
+   ![image](https://github.com/user-attachments/assets/f4d5efd6-f14b-467d-a250-ec9733383f3e)
+
+### **Execution Sequence**
+```
+lsusb # To check if Fpga is connected
+```
+   ![image](https://github.com/user-attachments/assets/e756da51-45cb-43f7-b6fa-ea4fb10c6c7c)     
+```
+make clean # Clear out old compilation artifacts
+
+make build # Compile the Verilog design
+
+sudo make flash # Upload the synthesized bitstream to the FPGA
+
+```
+
+   ![image](https://github.com/user-attachments/assets/2eb60b66-db50-41c2-bf3e-19a87e23c079)
+
+the led's on the board look like this, all leds ligthing red as expected!
+
+![image](https://github.com/user-attachments/assets/a6b76bcb-a977-4da5-aa0d-35dac6fcf71a)
+
 </details>
 
 ## 4. Testing and Verification:
 <details>
 <summary>Testing and Verification</summary>
+
+1. For the testing purpose we will use docklight software which is a simulation tool for serial communication protocols. It allows us to monitor the communication between two serial devices.It can be downladed from [here](https://docklight.de/downloads/).
+    
+2. After installation, open Docklight and select "Start with a blank project / blank script" to begin.
+
+ - Configure the correct communication port:
+
+  - Go to Tools > Project Settings.
+
+ - In the Communication tab, select your COM port (COM9 in my case).
+
+- Verify the speed is set to 9600 bps (not the default 115200).
+
+- Ensure other settings are correct: 8 data bits, 1 stop bit, no parity, and no flow control.
+
 </details>
 
 ## 5: Final Documentation:
