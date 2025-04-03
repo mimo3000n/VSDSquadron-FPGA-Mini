@@ -121,8 +121,7 @@ This document serves as an overview and reference for anyone looking to understa
   
 Create a block diagram illustrating the UART loopback architecture.
 
-![VSDSquadron-FPGA-Mini Project - Task 2 1 (1)](https://github.com/user-attachments/assets/4c24fdd1-f124-4259-b22a-fce072955bd5)
-
+![VSDSquadron-FPGA-Mini Project - Task 2 1 (2)](https://github.com/user-attachments/assets/3305a57f-4a2f-40c1-a92f-4b427ad0cfe9)
 
 Develop a detailed circuit diagram showing connections between the FPGA and any peripheral devices used.
 
