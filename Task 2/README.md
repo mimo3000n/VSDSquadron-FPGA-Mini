@@ -178,19 +178,28 @@ the led's on the board look like this, all leds ligthing red as expected!
 <details>
 <summary>Testing and Verification</summary>
 
-1. For the testing purpose we will use docklight software which is a simulation tool for serial communication protocols. It allows us to monitor the communication between two serial devices.It can be downladed from [here](https://docklight.de/downloads/).
+1. For the testing we will use docklight porogran which is a great testing tool for serial communication protocols. It allows us to monitor the communication between two serial devices.It can be downladed from [here](https://docklight.de/downloads/).
     
-2. After installation, open Docklight and select "Start with a blank project / blank script" to begin.
+2. befor we start using dockligth we chek in Windows Device Manager that COM-Port is still availabel - COM8 in my case.
 
- - Configure the correct communication port:
+   ![image](https://github.com/user-attachments/assets/70879f06-c0b9-42a6-ba68-19fbab6a121f)
 
-  - Go to Tools > Project Settings.
+- open Docklight and start with "Start with a blank project / blank script".
 
- - In the Communication tab, select your COM port (COM9 in my case).
+    ![image](https://github.com/user-attachments/assets/1f7f5a08-f2ad-4422-ba62-50fd0cbfe11c)
 
-- Verify the speed is set to 9600 bps (not the default 115200).
+ - Configure the correct communication port and protocol: COM8, 9600, 8, N, 1
 
-- Ensure other settings are correct: 8 data bits, 1 stop bit, no parity, and no flow control.
+   ![image](https://github.com/user-attachments/assets/7d193f1a-2e18-4802-bde0-6d3a395a13a7)
+
+  - double click on SEND window in the empty field below "Name" lable, Send-Window appear, now enter a Sequenze Name like "Task " and in Sequence field a character sequence that you like to transfer to tx-Port, in my case "Validatition Task 2", click OK.
+
+  - ![image](https://github.com/user-attachments/assets/7e7cb912-9fc7-44ca-ba67-e9c05dce995f)
+
+- click now on "Send sequence" butten (marked with red arrow) to send defined sequence. As result you should see samne char sequence on rx-line as defines in the Verilog module!
+
+- ![image](https://github.com/user-attachments/assets/a474ab3f-e61c-4f36-970e-eaa00e7deec6)
+
 
 </details>
 
