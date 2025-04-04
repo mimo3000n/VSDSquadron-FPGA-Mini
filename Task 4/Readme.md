@@ -216,6 +216,7 @@ the led's on the board look like this, RGB-LED is ligthing red as expected!
 
  - ![image](https://github.com/user-attachments/assets/7ef30896-6b7f-4eef-ba8b-6a33e9d9bf46)
 
+- Task 4 succesful completed with expected result!
 </details>
 
 ## 5: Final Documentation:
