@@ -152,24 +152,24 @@ Develop a detailed circuit diagram showing connections between the FPGA and any 
 - Set up the hardware according to the circuit diagram, ensuring proper sensor interfacing.
 -	Synthesize and load the Verilog code onto the FPGA.
 
-  ![image](https://github.com/user-attachments/assets/2b0adc95-aefd-413d-86a2-c0dc65b42b20)
+  - ![image](https://github.com/user-attachments/assets/2b0adc95-aefd-413d-86a2-c0dc65b42b20)
 
     or in VM provided by VSD, in Devices -> USB
 
-  ![image](https://github.com/user-attachments/assets/848be0a3-a1fa-457c-837b-dc11097a178a)
+  - ![image](https://github.com/user-attachments/assets/848be0a3-a1fa-457c-837b-dc11097a178a)
 
 ### **steps for compiling and flashing**
 
    open a termin window, cd to uart_tx_sense folder and execute below described comand sequence.
 
-   ![image](https://github.com/user-attachments/assets/4f1fee32-7b73-4776-b880-05dfead8f408)
+- ![image](https://github.com/user-attachments/assets/4f1fee32-7b73-4776-b880-05dfead8f408)
    
 
 ### **Execution Sequence**
 ```
 lsusb # To check if Fpga is connected
 ```
-   ![image](https://github.com/user-attachments/assets/e756da51-45cb-43f7-b6fa-ea4fb10c6c7c)     
+   - ![image](https://github.com/user-attachments/assets/e756da51-45cb-43f7-b6fa-ea4fb10c6c7c)     
 ```
 make clean # Clear out old compilation artifacts
 
@@ -178,12 +178,11 @@ make build # Compile the Verilog design
 sudo make flash # Upload the synthesized bitstream to the FPGA
 
 ```
-
-   ![image](https://github.com/user-attachments/assets/2eb60b66-db50-41c2-bf3e-19a87e23c079)
+ - ![image](https://github.com/user-attachments/assets/dbdca8a6-09a0-4cdf-90e6-d4cff9cac0d5)
 
 the led's on the board look like this, RGB-LED is ligthing red as expected!
 
-   ![20250404_163829](https://github.com/user-attachments/assets/c6b3e9c3-a1f0-4708-b170-338c7d6f47db)
+   -  ![20250404_163829](https://github.com/user-attachments/assets/333632c1-a7cc-4cf8-b4c2-7dc21e370570)
 
 
 </details>
@@ -198,15 +197,15 @@ the led's on the board look like this, RGB-LED is ligthing red as expected!
     
 2. befor we start using dockligth we chek in Windows Device Manager that COM-Port is still availabel - COM8 in my case.
 
-   ![image](https://github.com/user-attachments/assets/70879f06-c0b9-42a6-ba68-19fbab6a121f)
+   - ![image](https://github.com/user-attachments/assets/70879f06-c0b9-42a6-ba68-19fbab6a121f)
 
 - open Docklight and start with "Start with a blank project / blank script".
 
-    ![image](https://github.com/user-attachments/assets/1f7f5a08-f2ad-4422-ba62-50fd0cbfe11c)
+    - ![image](https://github.com/user-attachments/assets/1f7f5a08-f2ad-4422-ba62-50fd0cbfe11c)
 
  - Configure the correct communication port and protocol: COM8, 9600, 8, N, 1
 
-   ![image](https://github.com/user-attachments/assets/7d193f1a-2e18-4802-bde0-6d3a395a13a7)
+  -  ![image](https://github.com/user-attachments/assets/7d193f1a-2e18-4802-bde0-6d3a395a13a7)
 
   - in top icon-bar you find the "Start comminication" butten (marked with red arrow)
 
@@ -229,11 +228,19 @@ the led's on the board look like this, RGB-LED is ligthing red as expected!
 ### Summary of the Verilog code functionality
 The given [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/9221679090866a04f7cff231b9ec5c29e8601404/Task%202/top.v) works as a UART (Universal Asynchronous Receiver-Transmitter) for serial communication between devices. It use on one port for transmitting char "D", verified via Docklight in Video below. In addition LED driver in ICS40 is used to ligth RGB-Led in static red color.
 
-[Video terminal in VM](https://github.com/user-attachments/assets/fcf878a9-460d-4271-baae-1371ed9550c8)
+- block & curicuit diagram
+  
+- ![VSDSquadron-FPGA-Mini Project - Task 4 1](https://github.com/user-attachments/assets/898ba38f-18f4-4c25-8fc4-220b7d5ffb60)
 
-RGB LED is stattic red.
+- ![VSDSquadron-FPGA-Mini Project - Task 4 2](https://github.com/user-attachments/assets/c9f3cad4-538a-4339-8e72-effd85e4bef6)
 
-![20250404_163829](https://github.com/user-attachments/assets/dc221afe-4a22-4961-aa29-bd1fb8886f72)
+- Validation Video:
+
+- [Video terminal in VM](https://github.com/user-attachments/assets/fcf878a9-460d-4271-baae-1371ed9550c8)
+
+RGB LED is static red.
+
+- ![20250404_163829](https://github.com/user-attachments/assets/dc221afe-4a22-4961-aa29-bd1fb8886f72)
 
 ### Challenges Faced and Solutions Implemented
 
@@ -244,4 +251,4 @@ This project is open-source under the MIT License.
 
 ## Contact
 Email: mimo3000ngmail.com
-</details>Implement a UART loopback mechanism where transmitted data is immediately received back, facilitating testing of UART functionality.
+</details>
