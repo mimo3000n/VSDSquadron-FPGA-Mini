@@ -1,12 +1,12 @@
 
-# VSDSquadron-FPGA-Mini Project - Task 3
+# VSDSquadron-FPGA-Mini Project - Task 4
 
 ## Overview
-Develop a UART transmitter module capable of sending serial data from the FPGA to an external device.
+Implement a UART transmitter that sends data based on sensor inputs, enabling the FPGA to communicate real-time sensor data to an external device.
 
 ## 1: Study the Existing Code
--	Access the uart_tx project from the VSDSquadron_FM repository.
--	Examine the Verilog code to understand the transmission process.
+-	Access the uart_tx_sense project from the VSDSquadron_FM repository.
+-	Review the Verilog code to understand how sensor data is acquired and transmitted.
 
 <details>
 <summary>Here is a detailed explanation of the transmission process for the provided Verilog code. </summary>
@@ -141,19 +141,22 @@ In summary, the Verilog code implements a UART transmitter alongside RGB LED fun
 </details>
   
 ## 2. Design Documentation:
--	Create a block diagram detailing the UART transmitter module.
--	Develop a circuit diagram illustrating the FPGA's UART TX pin connection to the receiving device.
+-	Create a block diagram depicting the integration of the sensor module with the UART transmitter.
+-	Develop a circuit diagram showing connections between the FPGA, sensor, and the receiving device.
+
 
 <details>
 <summary>Design Documentation</summary>
   
 Create a block diagram illustrating the UART Tx architecture.
 
-![VSDSquadron-FPGA-Mini Project - Task 3 1](https://github.com/user-attachments/assets/2d9324cc-5dad-4ac5-bec1-8bcc56b5f1ca)
+![VSDSquadron-FPGA-Mini Project - Task 4 1](https://github.com/user-attachments/assets/ac16e495-5d72-4623-957c-569992a6ecf3)
+
 
 Develop a detailed circuit diagram showing connections between the FPGA and any peripheral devices used.
 
-![VSDSquadron-FPGA-Mini Project - Task 3 2](https://github.com/user-attachments/assets/d28400ba-b802-4a43-8f1e-b5e635432cbb)
+![VSDSquadron-FPGA-Mini Project - Task 4 2](https://github.com/user-attachments/assets/8b220b98-490b-4111-8a5f-776baa352154)
+
 
 </details>
 
@@ -165,9 +168,9 @@ Develop a detailed circuit diagram showing connections between the FPGA and any 
 
 - Refer to the [VSDSquadron FPGA Mini Datasheet](https://www.vlsisystemdesign.com/wp-content/uploads/2025/01/VSDSquadronFMDatasheet.pdf)
  for board details and pinout specifications.
-- Connect a USB-C interface between the board and the host computer.
-- Check FTDI connection in order to facilitate FPGA programming and debugging. Validate new serial device on you host system i.e. in Windows Device Manger that you see an additionam COM-Port, COM8 in my case.
- 
+- Set up the hardware according to the circuit diagram, ensuring proper sensor interfacing.
+-	Synthesize and load the Verilog code onto the FPGA.
+
   ![image](https://github.com/user-attachments/assets/2b0adc95-aefd-413d-86a2-c0dc65b42b20)
 
     or in VM provided by VSD, in Devices -> USB
@@ -203,6 +206,8 @@ the led's on the board look like this, all leds ligthing red as expected!
 </details>
 
 ## 4. Testing and Verification:
+-	Stimulate the sensor and observe the transmitted data on a serial terminal to verify accurate sensor data transmission.
+-	
 <details>
 <summary>Testing and Verification</summary>
 
@@ -231,6 +236,9 @@ the led's on the board look like this, all leds ligthing red as expected!
 </details>
 
 ## 5: Final Documentation:
+- Assemble the block diagram, circuit diagram, code analysis, and testing results into a detailed report.
+-	Record a short video demonstrating the system transmitting sensor data via UART.
+
 <details>
 <summary>Final Documentation of Task 2</summary>
     
