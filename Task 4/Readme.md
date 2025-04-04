@@ -5,7 +5,7 @@
 Implement a UART transmitter that sends data based on sensor inputs, enabling the FPGA to communicate real-time sensor data to an external device.
 
 ## 1: Study the Existing Code
--	Access the uart_tx_sense project from the VSDSquadron_FM repository.
+-	Access the uart_tx_sense project from the ![VSDSquadron_FM repository](https://github.com/thesourcerer8/VSDSquadron_FM/tree/53840bb096ec59b11f26a0b5e362711b12540dbd/uart_tx_sense).
 -	Review the Verilog code to understand how sensor data is acquired and transmitted.
 
 <details>
