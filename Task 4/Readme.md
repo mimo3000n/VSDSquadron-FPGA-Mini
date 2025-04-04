@@ -190,7 +190,7 @@ the led's on the board look like this, RGB-LED is ligthing red as expected!
 
 ## 4. Testing and Verification:
 -	Stimulate the sensor and observe the transmitted data on a serial terminal to verify accurate sensor data transmission.
--	
+
 <details>
 <summary>Testing and Verification</summary>
 
@@ -215,7 +215,7 @@ the led's on the board look like this, RGB-LED is ligthing red as expected!
 - click now on "Start communication" butten or F5 to start receiving process. As defined in Verilog-module we reveive continuous the char "D". 
 
  - ![image](https://github.com/user-attachments/assets/7ef30896-6b7f-4eef-ba8b-6a33e9d9bf46)
- - 
+
 </details>
 
 ## 5: Final Documentation:
