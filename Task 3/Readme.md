@@ -141,6 +141,9 @@ In summary, the Verilog code implements a UART transmitter alongside RGB LED fun
 </details>
   
 ## 2. Design Documentation:
+-	Create a block diagram detailing the UART transmitter module.
+-	Develop a circuit diagram illustrating the FPGA's UART TX pin connection to the receiving device.
+
 <details>
 <summary>Design Documentation</summary>
   
