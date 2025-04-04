@@ -147,13 +147,13 @@ In summary, the Verilog code implements a UART transmitter alongside RGB LED fun
 <details>
 <summary>Design Documentation</summary>
   
-Create a block diagram illustrating the UART loopback architecture.
+Create a block diagram illustrating the UART Tx architecture.
 
-![VSDSquadron-FPGA-Mini Project - Task 2 1 (2)](https://github.com/user-attachments/assets/3305a57f-4a2f-40c1-a92f-4b427ad0cfe9)
+![VSDSquadron-FPGA-Mini Project - Task 3 1](https://github.com/user-attachments/assets/2d9324cc-5dad-4ac5-bec1-8bcc56b5f1ca)
 
 Develop a detailed circuit diagram showing connections between the FPGA and any peripheral devices used.
 
-![VSDSquadron-FPGA-Mini Project - Task 22](https://github.com/user-attachments/assets/ad0da020-d427-40f0-8c47-761ad72ef984)
+![VSDSquadron-FPGA-Mini Project - Task 3 2](https://github.com/user-attachments/assets/d28400ba-b802-4a43-8f1e-b5e635432cbb)
 
 </details>
 
