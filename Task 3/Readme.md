@@ -5,114 +5,139 @@
 Develop a UART transmitter module capable of sending serial data from the FPGA to an external device.
 
 ## 1: Study the Existing Code
+-	Access the uart_tx project from the VSDSquadron_FM repository.
+-	Examine the Verilog code to understand the transmission process.
 
 <details>
-<summary>Study the Existing Code</summary>
-    The code is a simple UART (Universal Asynchronous Receiver/Transmitter) transmitter module that implements an 8 data bits, no parity, and 1 stop bit (8N1) format. Below, I will explain each part of the code and analyze its functionality.
+<summary>Here is a detailed explanation of the transmission process for the provided Verilog code. </summary>
 
-### Overview
+# Transmission Process of Verilog Code
 
-The system described consists of a top-level module that implements a basic RGB LED control along with a simple loopback logic for UART communication. The UART transmits data on one line of the communication while receiving on another line, effectively allowing for feedback that can be useful in debugging and communication testing.
+## Overview
 
-### Code Breakdown
+The provided Verilog code implements a simple UART (Universal Asynchronous Receiver Transmitter) transmission module, along with RGB LED control. It generates a 9600 Hz clock from a higher frequency oscillator and uses this clock to send a byte of data over UART while controlling RGB LEDs based on the frequency counter.
 
-#### Top Module
+## Structure of the Code
+
+The code consists of two main modules:
+1. `top`
+2. `uart_tx_8n1`
+
+### 1. Top Module
+
+#### Module Declaration
 
 ```verilog
 module top (
-  // outputs
-  output wire led_red,    // Red LED
-  output wire led_blue,   // Blue LED
-  output wire led_green,  // Green LED
-  output wire uarttx,     // UART Transmission pin
-  input wire uartrx,      // UART Receiving pin
-  input wire hw_clk       // Hardware clock
+  output wire led_red,
+  output wire led_blue,
+  output wire led_green,
+  output wire uarttx,
+  input wire hw_clk
 );
 ```
 
-##### Internal Components
-- **Internal Oscillator**: Generates a clock signal from a high-frequency oscillator block.
-- **Registers**: `frequency_counter_i` is utilized for counting cycle events (e.g., in setting baud rates).
-- **UART Loopback**: The assignment `assign uarttx = uartrx;` creates the primary loopback behavior where data received on the `uartrx` pin is directly sent out on the `uarttx` pin.
+#### Signal Declaration
 
-#### Counter Logic
+- Outputs: Red, Blue, and Green LEDs, UART transmission pin.
+- Input: Hardware clock.
+
+#### Internal Components
+
+- **Instant Oscillator**: 
+  - A high-frequency oscillator (`SB_HFOSC`) generates a base clock signal.
+  
+- **Frequency Counter**: 
+  - A 28-bit register (`frequency_counter_i`) is used to count clock cycles.
+
+#### Clock Generation for 9600 Hz
 
 ```verilog
-  always @(posedge int_osc) begin
-    frequency_counter_i <= frequency_counter_i + 1'b1;
-    /* generate 9600 Hz clock */
-  end
+reg clk_9600 = 0;
+reg [31:0] cntr_9600 = 32'b0;
+parameter period_9600 = 625;
 ```
 
-This section of the code increments a counter on the rising edge of the internal oscillator clock. This counter serves as a tool to potentially generate a baud rate of 9600 Hz, which is a common speed for UART communication. However, note that without further details or clock division, this section alone does not showcase the complete implementation for establishing a 9600 Hz signal.
+This section generates a 9600 Hz clock signal from the oscillator's output (12 MHz) using a counter. The counter increments on every rising edge of `int_osc` and toggles `clk_9600` after 625 counts (representing 9600 Hz).
 
-#### UART Transmission Module
+#### UART Transmission
+
+```verilog
+uart_tx_8n1 DanUART (.clk (clk_9600), .txbyte("D"), .senddata(frequency_counter_i[24]), .tx(uarttx));
+```
+
+Here, the `uart_tx_8n1` module is instantiated to handle UART transmission. It sends the character "D" when `frequency_counter_i[24]` is high, triggering the transmission.
+
+### 2. UART Module (`uart_tx_8n1`)
+
+#### Module Declaration
 
 ```verilog
 module uart_tx_8n1 (
-    clk,        // input clock
-    txbyte,     // outgoing byte
-    senddata,   // trigger tx
-    txdone,     // outgoing byte sent
-    tx,         // tx wire
+    clk,
+    txbyte,
+    senddata,
+    txdone,
+    tx
 );
 ```
 
-##### Functionality
-- **State Machine**: The UART module operates as a simple state machine with several states:
-  - `STATE_IDLE`: No transmission occurring.
-  - `STATE_STARTTX`: Initiates the transmission by sending a start bit.
-  - `STATE_TXING`: Sends the data bits, one at a time.
-  - `STATE_TXDONE`: Completes the transmission and sends the stop bit.
-  
-##### Transmission Logic
-The UART system sends data according to the 8N1 format, which means:
-- 8 data bits
-- No parity bit
-- 1 stop bit
+#### Signal Declaration
 
-Each state serves a distinct signaling purpose which adheres to UART communication standards.
+- Inputs: Clock, the byte to transmit (`txbyte`), and a signal to trigger transmission (`senddata`).
+- Outputs: `txdone` (indicates transmission completion) and UART transmission signal `tx`.
 
-#### RGB Driver
+#### State Machine for Transmission
+
+The module implements a state machine with the following states:
+- **STATE_IDLE**: Waiting for transmission trigger.
+- **STATE_STARTTX**: Sending the start bit (low).
+- **STATE_TXING**: Transmitting data bits (low to high).
+- **STATE_TXDONE**: Completing the transmission and sending the stop bit (high).
+
+#### Transmission Process Logic
+
+The logic block reacts to clock edges and includes conditions for each state:
+- In **STATE_IDLE**, if `senddata` is high, it transitions to **STATE_STARTTX**.
+- In **STATE_STARTTX**, it sends a start bit (low).
+- In **STATE_TXING**, it sends the 8 data bits, shifting the byte right.
+- In **STATE_TXDONE**, it sends the stop bit (high) and returns to **STATE_IDLE**, indicating the transmission is complete.
+
+## LED Driver
 
 ```verilog
 SB_RGBA_DRV RGB_DRIVER (
-    .RGBLEDEN(1'b1),
-    .RGB0PWM(uartrx),
-    .RGB1PWM(uartrx),
-    .RGB2PWM(uartrx),
-    .CURREN(1'b1),
-    .RGB0(led_green),
-    .RGB1(led_blue),
-    .RGB2(led_red)
+  .RGBLEDEN(1'b1),
+  .RGB0PWM (frequency_counter_i[24]&frequency_counter_i[23]),
+  .RGB1PWM (frequency_counter_i[24]&~frequency_counter_i[23]),
+  .RGB2PWM (~frequency_counter_i[24]&frequency_counter_i[23]),
+  .CURREN  (1'b1),
+  .RGB0    (led_green),
+  .RGB1    (led_blue),
+  .RGB2    (led_red)
 );
 ```
 
-The RGB LED driver interfaces the UART receive signal (`uartrx`) to the LED control signals. Each LED’s brightness can be modulated by the same `uartrx` input, making the LEDs respond visually to incoming UART data.
+This section drives the RGB LEDs' brightness based on bits from `frequency_counter_i`, which allows for a dynamic change in LED colors in sync with the oscillator frequency.
 
-#### PCF File
+## I/O Pin Assignments
 
-```plaintext
-set_io led_green 40
-set_io led_red	39
-set_io led_blue 41
-set_io uarttx 14
-set_io uartrx 15
-set_io hw_clk 20
+```verilog
+set_io  led_green 40
+set_io  led_red	39
+set_io  led_blue 41
+set_io  uarttx 14
+set_io  hw_clk 20
 ```
 
-This PCF file maps the I/O pins in the Verilog code to physical pins on the hardware device. Here is a breakdown:
-- LED pins are assigned to specific GPIOs (General Purpose Input/Output).
-- UART TX and RX pins are also mapped, facilitating communication.
+This specifies the physical pin assignments for the FPGA or hardware where the signals will be connected.
 
-### Conclusion
+## Conclusion
 
-The loopback logic is primarily facilitated by the direct assignment of `uartrx` to `uarttx`, allowing for a self-testing UART mode. This is particularly useful for testing communication setups. The RGB LED outputs provide visual feedback based on UART RX activity while the state machine in the `uart_tx_8n1` module ensures proper transmission using the UART protocol.
-
-There are still a few improvements that could be explored, such as error handling and more precise generation of timing signals for reliable communication. 
-
-This document serves as an overview and reference for anyone looking to understand or further develop the UART loopback functionality implemented in the provided code.  
-
+In summary, the Verilog code implements a UART transmitter alongside RGB LED functionality. The key steps in the transmission process are:
+1. Generating a 9600 Hz clock from a higher frequency using a counter.
+2. Triggering the transmission when certain conditions are met.
+3. Utilizing a state machine to manage the
 </details>
   
 ## 2. Design Documentation:
