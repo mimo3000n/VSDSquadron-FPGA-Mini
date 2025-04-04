@@ -224,13 +224,13 @@ the led's on the board look like this, all leds ligthing red as expected!
 <summary>Final Documentation of Task 2</summary>
     
 ### Summary of the Verilog code functionality
-The given [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/9221679090866a04f7cff231b9ec5c29e8601404/Task%202/top.v) works as a UART (Universal Asynchronous Receiver-Transmitter) for serial communication between devices. It use on one port for transmitting char "D", verified via Docklight in Video below. In addition LED driver in ICS40 is used to blink RGB-Led in red, green and blue color. 
+The given [Verilog module](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/blob/9221679090866a04f7cff231b9ec5c29e8601404/Task%202/top.v) works as a UART (Universal Asynchronous Receiver-Transmitter) for serial communication between devices. It use on one port for transmitting char "D", verified via Docklight in Video below. In addition LED driver in ICS40 is used to ligth RGB-Led in static red color.
 
-[Video Docklight](https://github.com/user-attachments/assets/d5be707e-d4f0-4cf1-95cb-7f162dee374c)
+[Video terminal in VM](https://github.com/user-attachments/assets/fcf878a9-460d-4271-baae-1371ed9550c8)
 
+RGB LED is stattic red.
 
-[Video LED blinking](https://github.com/user-attachments/assets/aebb2fbd-2adc-4f61-bce9-0b80ef9081bc)
-
+![20250404_163829](https://github.com/user-attachments/assets/dc221afe-4a22-4961-aa29-bd1fb8886f72)
 
 ### Challenges Faced and Solutions Implemented
 
