@@ -160,9 +160,10 @@ Develop a detailed circuit diagram showing connections between the FPGA and any 
 
 ### **steps for compiling and flashing**
 
-   open a termin window, cd to uart_loopback folder and execute below described comand sequence.
+   open a termin window, cd to uart_tx_sense folder and execute below described comand sequence.
 
-   ![image](https://github.com/user-attachments/assets/f4d5efd6-f14b-467d-a250-ec9733383f3e)
+   ![image](https://github.com/user-attachments/assets/4f1fee32-7b73-4776-b880-05dfead8f408)
+   
 
 ### **Execution Sequence**
 ```
@@ -180,9 +181,10 @@ sudo make flash # Upload the synthesized bitstream to the FPGA
 
    ![image](https://github.com/user-attachments/assets/2eb60b66-db50-41c2-bf3e-19a87e23c079)
 
-the led's on the board look like this, all leds ligthing red as expected!
+the led's on the board look like this, RGB-LED is ligthing red as expected!
 
-![image](https://github.com/user-attachments/assets/a6b76bcb-a977-4da5-aa0d-35dac6fcf71a)
+   ![20250404_163829](https://github.com/user-attachments/assets/c6b3e9c3-a1f0-4708-b170-338c7d6f47db)
+
 
 </details>
 
@@ -212,8 +214,8 @@ the led's on the board look like this, all leds ligthing red as expected!
 
 - click now on "Start communication" butten or F5 to start receiving process. As defined in Verilog-module we reveive continuous the char "D". 
 
-- ![image](https://github.com/user-attachments/assets/250441a2-289b-41b1-bda6-023bf8008d7d)
-
+ - ![image](https://github.com/user-attachments/assets/7ef30896-6b7f-4eef-ba8b-6a33e9d9bf46)
+ - 
 </details>
 
 ## 5: Final Documentation:
