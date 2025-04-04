@@ -11,134 +11,115 @@ Implement a UART transmitter that sends data based on sensor inputs, enabling th
 <details>
 <summary>Here is a detailed explanation of the transmission process for the provided Verilog code. </summary>
 
-# Transmission Process of Verilog Code
+### Module Declaration
 
-## Overview
+The top-level module is named `top`. It contains the following input and output ports:
 
-The provided Verilog code implements a simple UART (Universal Asynchronous Receiver Transmitter) transmission module, along with RGB LED control. It generates a 9600 Hz clock from a higher frequency oscillator and uses this clock to send a byte of data over UART while controlling RGB LEDs based on the frequency counter.
-
-## Structure of the Code
-
-The code consists of two main modules:
-1. `top`
-2. `uart_tx_8n1`
-
-### 1. Top Module
-
-#### Module Declaration
-
-```verilog
-module top (
-  output wire led_red,
-  output wire led_blue,
-  output wire led_green,
-  output wire uarttx,
-  input wire hw_clk
-);
-```
-
-#### Signal Declaration
-
-- Outputs: Red, Blue, and Green LEDs, UART transmission pin.
-- Input: Hardware clock.
-
-#### Internal Components
-
-- **Instant Oscillator**: 
-  - A high-frequency oscillator (`SB_HFOSC`) generates a base clock signal.
+- **Outputs:**
+  - `led_red`: Connects to a red LED.
+  - `led_blue`: Connects to a blue LED.
+  - `led_green`: Connects to a green LED.
+  - `uarttx`: UART transmission pin.
   
-- **Frequency Counter**: 
-  - A 28-bit register (`frequency_counter_i`) is used to count clock cycles.
+- **Inputs:**
+  - `uartrx`: UART reception pin (sendor data).
+  - `hw_clk`: Hardware clock input.
 
-#### Clock Generation for 9600 Hz
+### Internal Signals
+
+- `int_osc`: Internal oscillator signal for clock generation.
+- `frequency_counter_i`: 28-bit register used for counting the frequency.
+- `clk_9600`: Register to hold the generated 9600 Hz clock.
+- `cntr_9600`: Counter for generating the 9600 Hz clock.
+- `period_9600`: Constant parameter to determine the period for the 9600 Hz clock.
+
+### Clock Generation
+
+The internal oscillator is defined using the `SB_HFOSC` primitive, which sets up a high-frequency oscillator:
 
 ```verilog
-reg clk_9600 = 0;
-reg [31:0] cntr_9600 = 32'b0;
-parameter period_9600 = 625;
+SB_HFOSC #(.CLKHF_DIV ("0b10")) u_SB_HFOSC ( .CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
 ```
 
-This section generates a 9600 Hz clock signal from the oscillator's output (12 MHz) using a counter. The counter increments on every rising edge of `int_osc` and toggles `clk_9600` after 625 counts (representing 9600 Hz).
+The `always` block monitors the positive edge of `int_osc` to increment `frequency_counter_i`. When the counter reaches the specified period (`625`), it toggles `clk_9600`:
 
-#### UART Transmission
+```verilog
+always @(posedge int_osc) begin
+    frequency_counter_i <= frequency_counter_i + 1'b1;
+    ...
+    if (cntr_9600 == period_9600) begin
+        clk_9600 <= ~clk_9600;
+        cntr_9600 <= 32'b0;
+    end
+end
+```
+
+### UART Transmission
+
+#### Instantiation of UART Module
+
+The UART transmission module `uart_tx_8n1` is instantiated to handle the UART transmission. It sends a byte of data (`"D"`) based on the condition:
 
 ```verilog
 uart_tx_8n1 DanUART (.clk (clk_9600), .txbyte("D"), .senddata(frequency_counter_i[24]), .tx(uarttx));
 ```
 
-Here, the `uart_tx_8n1` module is instantiated to handle UART transmission. It sends the character "D" when `frequency_counter_i[24]` is high, triggering the transmission.
+#### UART Module Details 
 
-### 2. UART Module (`uart_tx_8n1`)
+The `uart_tx_8n1` module operates as follows:
 
-#### Module Declaration
+- **States:** 
+  - `STATE_IDLE`: Waiting for a signal to start transmission.
+  - `STATE_STARTTX`: Sending the start bit.
+  - `STATE_TXING`: Sending the data bits.
+  - `STATE_TXDONE`: Indicating transmission is complete.
+
+The transmission begins when `senddata` is high and `state` is `STATE_IDLE`. It transitions through the states, sending a start bit, data bits, and a stop bit:
 
 ```verilog
-module uart_tx_8n1 (
-    clk,
-    txbyte,
-    senddata,
-    txdone,
-    tx
-);
+if (senddata == 1 && state == STATE_IDLE) begin
+    ...
+    state <= STATE_STARTTX;
+end
 ```
 
-#### Signal Declaration
+### RGB LED Driver
 
-- Inputs: Clock, the byte to transmit (`txbyte`), and a signal to trigger transmission (`senddata`).
-- Outputs: `txdone` (indicates transmission completion) and UART transmission signal `tx`.
-
-#### State Machine for Transmission
-
-The module implements a state machine with the following states:
-- **STATE_IDLE**: Waiting for transmission trigger.
-- **STATE_STARTTX**: Sending the start bit (low).
-- **STATE_TXING**: Transmitting data bits (low to high).
-- **STATE_TXDONE**: Completing the transmission and sending the stop bit (high).
-
-#### Transmission Process Logic
-
-The logic block reacts to clock edges and includes conditions for each state:
-- In **STATE_IDLE**, if `senddata` is high, it transitions to **STATE_STARTTX**.
-- In **STATE_STARTTX**, it sends a start bit (low).
-- In **STATE_TXING**, it sends the 8 data bits, shifting the byte right.
-- In **STATE_TXDONE**, it sends the stop bit (high) and returns to **STATE_IDLE**, indicating the transmission is complete.
-
-## LED Driver
+The RGB LED driver (`SB_RGBA_DRV`) is instantiated to control the RGB LEDs based on the incoming UART data (`uartrx`). The connection to the actual hardware pins is specified within:
 
 ```verilog
 SB_RGBA_DRV RGB_DRIVER (
-  .RGBLEDEN(1'b1),
-  .RGB0PWM (frequency_counter_i[24]&frequency_counter_i[23]),
-  .RGB1PWM (frequency_counter_i[24]&~frequency_counter_i[23]),
-  .RGB2PWM (~frequency_counter_i[24]&frequency_counter_i[23]),
-  .CURREN  (1'b1),
-  .RGB0    (led_green),
-  .RGB1    (led_blue),
-  .RGB2    (led_red)
+    .RGBLEDEN(1'b1),
+    .RGB0PWM (uartrx),
+    .RGB1PWM (uartrx),
+    .RGB2PWM (uartrx),
+    ... // LED pin connections
 );
 ```
 
-This section drives the RGB LEDs' brightness based on bits from `frequency_counter_i`, which allows for a dynamic change in LED colors in sync with the oscillator frequency.
+#### Current Settings
 
-## I/O Pin Assignments
+Each RGB channel's current settings are defined, ensuring that they operate correctly when activated.
+
+#### I/O Connections
+
+Throughout the code, specific I/O pins are assigned using the following statements:
 
 ```verilog
 set_io  led_green 40
 set_io  led_red	39
 set_io  led_blue 41
 set_io  uarttx 14
+set_io  uartrx 15
 set_io  hw_clk 20
 ```
 
-This specifies the physical pin assignments for the FPGA or hardware where the signals will be connected.
+### Summary
 
-## Conclusion
+This Verilog code captures the operational flow for a microcontroller-like system that generates a 9600 Hz clock from a high-frequency oscillator, transmits sensor data using UART, and visually indicates the data with RGB LEDs. The UART module transmits data one byte at a time according to the defined states, allowing for straightforward and effective communication in embedded systems.
 
-In summary, the Verilog code implements a UART transmitter alongside RGB LED functionality. The key steps in the transmission process are:
-1. Generating a 9600 Hz clock from a higher frequency using a counter.
-2. Triggering the transmission when certain conditions are met.
-3. Utilizing a state machine to manage the
 </details>
+
   
 ## 2. Design Documentation:
 -	Create a block diagram depicting the integration of the sensor module with the UART transmitter.
