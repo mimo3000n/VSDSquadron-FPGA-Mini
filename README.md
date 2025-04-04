@@ -63,9 +63,13 @@ capabilities
 | **Operating Temperature**   | -40°C to 85°C                      |
 | **Development Tools**       | Project Icestorm, Yosys, NextPNR    |
 ## ✅ Task
-- [Task 1](https://github.com/Arihaansingh/VSDSquadron_fpga_mini-FM-Internship_By-Arihaan_singh/blob/main/Task%201/Task%201%20.md) -The project focuses on implementing and testing an FPGA-based RGB LED controller on the VSDSquadron FPGA Mini board. It involves analyzing a Verilog design, mapping pin configurations using a PCF file, and programming the FPGA to control LED behavior using an internal oscillator.
+- [Task 1](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%201) -The project focuses on implementing and testing an FPGA-based RGB LED controller on the VSDSquadron FPGA Mini board. It involves analyzing a Verilog design, mapping pin configurations using a PCF file, and programming the FPGA to control LED behavior using an internal oscillator.
 
-- [Task 2](https://github.com/Arihaansingh/VSDSquadron_fpga_mini-FM-Internship_By-Arihaan_singh/blob/main/Task%202/Task%202.md) -The project implements a UART loopback mechanism on the VSDSquadron FPGA Mini, where transmitted data is immediately received back, enabling easy testing and debugging of UART functionality
+- [Task 2](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%202) -The task implements a UART loopback mechanism on the VSDSquadron FPGA Mini, where transmitted data is immediately received back, enabling easy testing and debugging of UART functionality
+
+- [Task 3](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%203) - This task develop a UART transmitter module capable of sending serial data from the FPGA to an external device.
+
+- [Task 4](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%204) - This task implement a UART transmitter that sends data based on sensor inputs, enabling the FPGA to communicate real-time sensor data to an external device.
 ## ✍ Author
 **Gerhard Koller**
 **Github-** [Gerhard Koller](https://github.com/mimo3000n)
