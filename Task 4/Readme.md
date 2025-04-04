@@ -167,7 +167,7 @@ Develop a detailed circuit diagram showing connections between the FPGA and any 
 
 ### **Execution Sequence**
 ```
-lsusb # To check if Fpga is connected
+lsusb # To check if Fpga-board is connected
 ```
    - ![image](https://github.com/user-attachments/assets/e756da51-45cb-43f7-b6fa-ea4fb10c6c7c)     
 ```
