@@ -72,7 +72,8 @@ capabilities
 - [Task 4](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%204) - This task implement a UART transmitter that sends data based on sensor inputs, enabling the FPGA to communicate real-time sensor data to an external device.
 ## ✍ Author
 **Gerhard Koller**
-**Github-** [Gerhard Koller](https://github.com/mimo3000n)
+**Github-** 
+[Gerhard Koller](https://github.com/mimo3000n)
 
 
 
