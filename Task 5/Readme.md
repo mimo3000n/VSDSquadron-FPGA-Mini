@@ -128,8 +128,11 @@ This outline provides a comprehensive list of hardware components and software t
 
 ### 3.	Design System Architecture:
 -	Develop block diagrams illustrating the system's architecture, including data flow between components.
-<summary>Design System Architecture</summary>
+
 <details>
+    <summary>Design System Architecture</summary>
+ 
+   ![Digital Oscilloscope 2](https://github.com/user-attachments/assets/d7faa2c4-c7af-4944-9089-d3054f9e62b5)
   
 </details>
 
