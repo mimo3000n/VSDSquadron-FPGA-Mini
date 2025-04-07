@@ -137,12 +137,9 @@ This outline provides a comprehensive list of hardware components and software t
 </details>
 
 ### 4.	Develop a Project Plan:
-Outline the implementation steps, timelines, and milestones for the project with detailed explanation and block diagrams wherever necessary
-<summary>Develop a Project Plan</summary>
-
-#### Deliverables:
--	A comprehensive project proposal document.
+- Outline the implementation steps, timelines, and milestones for the project with detailed explanation and block diagrams wherever necessary
 <details>
+<summary>Develop a Project Plan</summary>
 
 # Project Proposal: Development of a Digital Oscilloscope Using iCE40 FPGA
 
@@ -230,25 +227,11 @@ This project seeks to bridge the gap between theoretical knowledge in electronic
 - Microchip Technology: MCP3201 ADC Datasheet
 - Micron Technology: MT40A256M16 DDR4 Datasheet
 - Display Module Manufacturer Documentation
-
-  
 </details>
 
--	System architecture diagrams.
-<details>
-<summary>System architecture diagrams</summary> 
-</details>
-
-### 4. develop a project plan.
 
 <details>
-<summary>Implementation Steps and Project Timelin</summary>
-# Implementation Steps and Project Timeline for Digital Oscilloscope Using iCE40 FPGA
-
-## Project Overview
-
-### Objective
-Develop a digital oscilloscope capable of capturing and visualizing analog signals through the integration of an iCE40 FPGA, an ADC, and a display module.
+<summary>Implementation Steps and Project Timeline</summary>
 
 ## Implementation Steps
 
@@ -323,18 +306,12 @@ Develop a digital oscilloscope capable of capturing and visualizing analog signa
   - Document design decisions, code comments, and findings from the project.
   - Prepare final presentation materials summarizing project outcomes.
 
-</details>
-
-
-----------------------------------------------
-# Project Plan: Digital Oscilloscope Development Using iCE40 FPGA
-
-## Project Overview
+## Project Plan: Digital Oscilloscope Development Using iCE40 FPGA
 
 ### Objective
 Develop a digital oscilloscope that captures and displays analog signals using an iCE40 FPGA, an ADC, and a display module. The project will provide hands-on experience in FPGA design, digital signal processing, and component integration.
 
-## Project Phases and Timeline
+### Project Phases and Timeline
 
 | Phase                      | Tasks                                                     | Duration       | Start Date   | End Date     | Responsible   | Resources Required                                  |
 |----------------------------|----------------------------------------------------------|----------------|--------------|--------------|---------------|-----------------------------------------------------|
@@ -347,12 +324,12 @@ Develop a digital oscilloscope that captures and displays analog signals using a
 | **Phase 7: Documentation**      | - Create user manual for the oscilloscope<br>- Document design decisions and code comments<br>- Compile findings into a final report | 1 week        | 07/17/2025   | 07/23/2025   | Team Member 2 | Document editing software (e.g., Google Docs, LaTeX), presentations software |
 | **Phase 8: Presentation & Review** | - Prepare presentation materials<br>- Present project outcomes to stakeholders<br>- Gather feedback and suggestions for improvement | 1 week        | 07/24/2025   | 07/30/2025   | All Team Members | Presentation software (e.g., PowerPoint, Google Slides), feedback tools |
 
-## Total Project Duration
+### Total Project Duration
 - **Duration**: 12 weeks
 - **Start Date**: 05/01/2025
 - **End Date**: 07/30/2025
 
-## Milestones
+### Milestones
 - **Milestone 1**: Completion of research and design phase (05/14/2025)
 - **Milestone 2**: Hardware components selected and ordered (05/21/2025)
 - **Milestone 3**: Hardware prototype successfully assembled (05/28/2025)
@@ -360,7 +337,7 @@ Develop a digital oscilloscope that captures and displays analog signals using a
 - **Milestone 5**: Successful testing and validation of the oscilloscope (07/16/2025)
 - **Milestone 6**: Final documentation and presentation prepared (07/30/2025)
 
-## Team Roles
+### Team Roles
 - **Team Member 1**: Research, Hardware setup, Calibration
 - **Team Member 2**: Component selection, Documentation, General support
 - **Team Member 3**: Firmware development, Simulation/testing
