@@ -70,6 +70,10 @@ capabilities
 - [Task 3](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%203) - This task develop a UART transmitter module capable of sending serial data from the FPGA to an external device.
 
 - [Task 4](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/f2dc22679ddc3caba393c163f38a492fbb7128da/Task%204) - This task implement a UART transmitter that sends data based on sensor inputs, enabling the FPGA to communicate real-time sensor data to an external device.
+
+- [Task 5](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/48ed63a3e66b448eac2b33acd8a0b66e40a073b3/Task%205) - This taks involves designing a digital oscilloscope utilizing the FPGA to sample input signals, process the data, and display waveforms on a screen, enabling real-time signal analysis.
+
+- [Task 6](https://github.com/mimo3000n/VSDSquadron-FPGA-Mini/tree/48ed63a3e66b448eac2b33acd8a0b66e40a073b3/Task%206) - This taks implement a Real-Time Sensor Data Acquisition and Transmission System - using a ultrasonic sensor (HC-SR04).
 ## ✍ Author
 **Gerhard Koller**
 **Github-** 
