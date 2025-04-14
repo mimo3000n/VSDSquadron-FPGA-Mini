@@ -51,6 +51,7 @@ putty(Serial monitoring tool).
 
 #### Block Diagram
 
+![Task 6 block diagram](https://github.com/user-attachments/assets/3d860e6e-d82f-4b8d-ade8-29c90165c5c7)
 
 The system consists of four primary functional blocks:
 
@@ -74,9 +75,43 @@ Data Flow
 HC-SR04 sensor receives trigger pulse from FPGA
 Echo pulse duration is measured by FPGA
 FPGA converts pulse duration to distance
-Distance data is formatted and transmitted via UART
-ESP8266 receives data for wireless transmission
+Distance data is formatted and transmitted via UART,
 RGB LED provides visual distance indication
+
+
+#### System Setup and Component Testing
+
+- Configure FPGA development environment.
+- Test HC-SR04 sensor functionality.
+- Implement and test RGB LED driver.
+
+#### FPGA Module Development
+
+- Develop ultrasonic sensor interface module
+- Implement trigger pulse generation (10μs).
+- Create echo pulse measurement system.
+- Add 250ms delay period between measurements.
+
+#### Communication System Implementation
+
+- Develop UART transmitter module.
+
+#### Integration and Testing
+
+- Combine all FPGA modules into complete system.
+- Implement RGB LED feedback based on distance thresholds.
+- Conduct comprehensive system testing
+- Verify measurement accuracy at various distances.
+- Test communication reliability.
+- Validate visual feedback functionality
+- 
+#### Expected Outcomes
+
+The completed system will provide:
+
+- Real-time distance measurements using the HC-SR04 ultrasonic sensor.
+- Visual feedback through RGB LEDs based on measured distance.
+- This project demonstrates the integration of sensor data acquisition with real-time processing and communication capabilities.
 
 </details>
 
