@@ -4,7 +4,9 @@ develop and understand spike genation based on a state maschine
 
 use in ultrasonic sendor interface as mesurment trigger.
 
-# Verilog Code Explanation for Spike Generator
+# Verilog Code Explanation for Spike Generator with state maschine
+<details>
+<summary>Verilog Code Explanation for Spike Generator with state maschine</summary>
 
 ## Overview
 This documentation explains a Verilog code designed to generate a trigger spike for use with the ICE40 FPGA from Lattice Semiconductor, detail how to adjust the spike frequency and width, and offers additional considerations for implementation, debugging, and enhancements.
@@ -95,3 +97,56 @@ This documentation explains a Verilog code designed to generate a trigger spike 
 ## Conclusion
 The spike generator implemented on the ICE40 FPGA provides a flexible and efficient solution for various applications. By making adjustments to spike width and frequency, ensuring robust testing, and considering enhancements, the design can be tailored to meet specific operational requirements.
 
+</details>
+
+------------------------------------------------------------
+
+# Verilog Code for Spike Generator all in `top.v` without include `spike.v` without a state maschine
+<details>
+<summary>Verilog Code for Spike Generator all in `top.v` without include `spike.v` without a state maschine</summary>
+
+## Overview
+This code implements a spike generator directly within one module, suitable for the ICE40 FPGA. It uses a simple counter mechanism for pulse generation without employing a state machine.
+
+## Verilog Code
+
+```verilog
+module top (
+    output wire trig,            // 10us spike output
+    input wire hw_clk            // Hardware clock input (unused, using internal oscillator)
+);
+
+// Clock generation
+wire int_osc;                    // Internal oscillator signal
+
+// Instantiate internal oscillator (6 MHz)
+SB_HFOSC #(.CLKHF_DIV ("0b11")) u_SB_HFOSC (
+    .CLKHFPU(1'b1),              // Power up high-frequency oscillator
+    .CLKHFEN(1'b1),              // Enable high-frequency oscillator
+    .CLKHF(int_osc)              // Output clock signal
+);
+
+// Declare additional parameters and registers for the spike generation
+parameter TRIGGER_CYCLES = 60;  // Duration of trigger pulse (in clock cycles)
+reg [7:0] count = 0;            // Counter for trigger pulse duration
+reg trig_temp = 0;              // Temporary trigger signal
+
+// Pulse generation logic
+always @(posedge int_osc) begin
+    if (count < TRIGGER_CYCLES) begin
+        trig_temp <= 1;          // Set trigger high
+        count <= count + 1;      // Increment counter
+    end else begin
+        trig_temp <= 0;          // Set trigger low
+        count <= 0;              // Reset counter for next trigger
+    end
+end
+
+assign trig = trig_temp;         // Assign the temporary trigger to the output
+
+endmodule
+```
+
+</details>
+
+------------------------------------------------------------
