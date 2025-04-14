@@ -245,7 +245,6 @@ The system continuously measures distance, converts it to human-readable format,
 
 1. **Hardware Setup**
 
-
 - Refer to the [VSDSquadron FPGA Mini Datasheet](https://www.vlsisystemdesign.com/wp-content/uploads/2025/01/VSDSquadronFMDatasheet.pdf)
  for board details and pinout specifications.
 - Connect a USB-C interface between the board and the host computer.
@@ -271,6 +270,9 @@ make build # Compile the Verilog design
 sudo make flash # Upload the synthesized bitstream to the FPGA
 ```
 
+![image](https://github.com/user-attachments/assets/1cefe843-326a-4c61-9c97-401a1da42202)
+
+
 2. **Terminal**:
 
    - Open putty and select serial option.
@@ -282,6 +284,9 @@ sudo make flash # Upload the synthesized bitstream to the FPGA
    - Place an object ~10 cm away from the sensor.
    - Terminal should display a reading around “0010” .
    - Move the object closer or farther to see changing values.
+
+![image](https://github.com/user-attachments/assets/ac3fc7a4-3b95-4f00-a9cd-ba31094cd968)
+
 
 ***
 
