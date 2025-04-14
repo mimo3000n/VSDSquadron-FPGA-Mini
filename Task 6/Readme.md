@@ -35,4 +35,19 @@ o	Upload all project files, including code, documentation, and the demonstration
 •	A short video demonstrating the project's functionality.
 <details>
 <summary>A short video demonstrating the project's functionality. </summary>
+
+ [Video 1](https://github.com/user-attachments/assets/9c3b2f3d-7ad4-4d9b-8be1-a261d89588b5)
+
+ [Video 2](https://github.com/user-attachments/assets/85ac448e-c726-47ee-8404-e71b099a859a)
+
+### pulsview (open souce sw for tiny logic analysator from sigrock) testing:
+
+- D1 is trigger line
+- D2 is Echo line of ultrasonic sensor show puls wide is dependent from object distance, simulated with hand movement.
+
+ [pulseview screen shot](![image](https://github.com/user-attachments/assets/84bca8cc-d3dc-4b23-adcf-407ac631cda4)
+
+ 
+)
+
 </details>
