@@ -170,16 +170,74 @@ RGB LED provides visual distance indication
 
 #### FPGA Module Development
 
-- Develop ultrasonic sensor interface module
-- Implement trigger pulse generation (10μs).
-- Create echo pulse measurement system.
-- Add 250ms delay period between measurements.
+<summary>Step 1 : Developing FPGA Modules</summary>
+
+<br>
+
+The project is implemented using several interconnected Verilog modules, each handling specific functionality. Here's a detailed explanation of each module:
+
+#### Ultrasonic Sensor Interface
+
+The `ultrasonic` module manages the HC-SR04 ultrasonic distance sensor interface:
+
+- **Parameters**:
+  - `TRIGGER_CYCLES`: Controls the trigger pulse duration (set to 60 cycles).
+  - `MAX_ECHO_CYCLES`: Prevents system hanging if echo never returns (24-bit max value). 
+  - `COOLDOWN_CYCLES`: Ensures proper timing between measurements (12,000 cycles or 250ms at 12MHz).
+- **Functionality**: Implements a 4-state FSM that:
+  - Initializes counters in idle state.
+  - Generates a trigger pulse to the sensor.
+  - Measures the echo pulse width by counting clock cycles.
+  - Enforces a cooldown period before starting the next measurement.
+
+- The module outputs `pulse_width`, which represents the echo duration in clock cycles.
+
+#### Distance Calculation
+
+The `distance_calc` module converts echo pulse duration to distance:
+
+- **Parameters**:
+  - `CLK_PER_CM`: Calibration constant (348 clock cycles per centimeter).
+- **Functionality**: Divides the echo pulse width by the calibration constant to calculate distance in centimeters.
+
+#### BCD Converter
+
+The `bcd_converter` module converts binary distance values to decimal digits:
+
+- **Inputs**: 16-bit binary distance value.
+- **Outputs**: Three 4-bit BCD values for hundreds, tens, and units digits,
+- **Functionality**: Performs integer division and modulo operations to extract individual decimal digits from the binary distance value.
 
 #### Communication System Implementation
 
-- Develop UART transmitter module.
+#### UART Transmission
 
-#### Integration and Testing
+The `uart_tx_8n1` module (included but not shown in detail) handles serial communication:
+
+- **Functionality**: Transmits 8-bit data with no parity and 1 stop bit over UART protocol.
+
+##### Top Module Integration
+
+The `top` module integrates all components:
+
+- **Clock Generation**: Uses the internal oscillator (SB\_HFOSC) configured to generate the system clock.
+- **Measurement System**: Instantiates the ultrasonic sensor interface and distance calculation modules.
+- **Data Processing**: Uses the BCD converter to prepare distance values for transmission.
+- **UART Control**: Implements a 5-state FSM to transmit distance readings serially:
+  - Waits for 1 second between transmissions.
+  - Sends hundreds digit.
+  - Sends tens digit.
+  - Sends units digit.
+  - Sends newline character.
+- **LED Feedback**: Uses the RGB LED to provide visual distance feedback:
+  - Red LED: Distance ≤ 50cm.
+  - Green LED: Distance between 50cm and 100cm.
+  - Blue LED: Distance > 100cm.
+
+The system continuously measures distance, converts it to human-readable format, transmits it via UART, and provides visual feedback through the RGB LED.
+
+
+### Integration and Testing
 
 <summary> Testing with Serial Termianl</summary>
 
