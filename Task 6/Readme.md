@@ -30,6 +30,54 @@ o	Upload all project files, including code, documentation, and the demonstration
 •	Comprehensive project documentation on GitHub.
 <details>
 <summary>Comprehensive project documentation on GitHub </summary>
+
+### Project description
+ This project implements an ultrasonic distance measurement system with UART output. It measures distance using an ultrasonic sensor (HC-SR04 or similar), converts the measurement to centimeters, and transmits the result to ESP8266(NodeMCU) via UART at 9600 baud. This project also provides visual feedback through RGB LEDs based on the measured distance.
+
+#### System Requirements
+
+Hardware Components:
+
+- VSDSquadron Fpga board.
+- HC-SR04 ultrasonic sensor.
+- Logic Analysator
+- USB cable
+- Connecting wires and breadboard
+
+Software Tools:
+
+pulsview (logic analysator software)
+putty(Serial monitoring tool).
+
+#### Block Diagram
+
+
+The system consists of four primary functional blocks:
+
+1. Sensor Interface Module
+Generates 10μs trigger pulses for the HC-SR04
+Measures echo pulse duration
+Implements 250ms cooldown period between measurements.
+2. Data Processing Module
+Converts echo time to distance in centimeters
+Formats data for transmission
+Implements signal conditioning if necessary
+3. Communication Module
+UART transmitter (9600 baud rate)
+Packet formation with start/stop bits.
+Serial data transmission to ESP8266
+4. Feedback and Display Module
+RGB LED driver for visual distance indication
+Distance thresholds for color changes
+Data Flow
+
+HC-SR04 sensor receives trigger pulse from FPGA
+Echo pulse duration is measured by FPGA
+FPGA converts pulse duration to distance
+Distance data is formatted and transmitted via UART
+ESP8266 receives data for wireless transmission
+RGB LED provides visual distance indication
+
 </details>
 
 •	A short video demonstrating the project's functionality.
