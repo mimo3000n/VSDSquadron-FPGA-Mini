@@ -310,6 +310,15 @@ The completed system will provide:
 
  [Video 2](https://github.com/user-attachments/assets/85ac448e-c726-47ee-8404-e71b099a859a)
 
+ new Viedo - showing distance change if i mode hand close to ultrasonic sensor
+
+ [Video 3](https://github.com/user-attachments/assets/d7cb5cdf-beb1-4332-8383-4488ee55c94e)
+
+https://github.com/user-attachments/assets/d7cb5cdf-beb1-4332-8383-4488ee55c94e
+
+
+
+
 ### pulsview (open souce sw for tiny logic analysator from sigrock) testing:
 
 - D1 is trigger line
